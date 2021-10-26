@@ -2,6 +2,7 @@ package com.intelliatech.LibraryManagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class LibraryManagementApplication {
@@ -10,4 +11,5 @@ public class LibraryManagementApplication {
 		SpringApplication.run(LibraryManagementApplication.class, args);
 	}
 
-}
+	}
+
