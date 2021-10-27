@@ -17,6 +17,8 @@ public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Override
     public ErrorMessage createUser(UserDto userDto) throws BusinessException{
@@ -26,6 +28,8 @@ public class UserServiceImpl implements UserService {
         //UserDto to User Entity
         BeanUtils.copyProperties(userDto,user);
         user.setAddress(userDto.getAddress());
+        //Make User username password in the encrypted form
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User user1 = this.userRepository.save(user);
         if(user1 != null)
         {

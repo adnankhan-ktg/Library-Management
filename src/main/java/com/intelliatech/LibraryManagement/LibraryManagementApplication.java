@@ -11,5 +11,12 @@ public class LibraryManagementApplication {
 		SpringApplication.run(LibraryManagementApplication.class, args);
 	}
 
+
+//	@Bean
+//	public PasswordEncoder passwordEncoder()
+//	{
+//		return new BCryptPasswordEncoder();
+//	}
+
 	}
 
