@@ -11,15 +11,11 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-    private long userId;
-    @Column(name = "username",unique = true)
-    private String username;
-    @Column(name = "password")
-    private String password;
+    @Column(name = "student_id")
+    private long studentId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -36,10 +32,11 @@ public class User {
     private String registrationDate;
     @Column(name = "is_active")
     private boolean isActive;
-
+    @Column(name = "number_of_book_issued")
+    private int numberOfBookIssued;
+    @Column(name = "total_penalty")
+    private int totalPenalty;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;
-
-
 
 }

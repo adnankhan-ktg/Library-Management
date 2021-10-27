@@ -1,9 +1,15 @@
 package com.intelliatech.LibraryManagement.service;
 
+import com.intelliatech.LibraryManagement.dto.LoginDto;
 import com.intelliatech.LibraryManagement.dto.UserDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 
+import java.util.List;
+
 public interface UserService {
     ErrorMessage createUser(UserDto userDto) throws BusinessException;
+    ErrorMessage login(LoginDto loginDto) throws BusinessException;
+    List<UserDto> getUsers() throws BusinessException;
+    UserDto getUser(long userId) throws BusinessException;
 }

@@ -11,7 +11,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LoginDto {
 
     private String username;
-    private String mobileNumber;
-    private String email;
     private String password;
 }

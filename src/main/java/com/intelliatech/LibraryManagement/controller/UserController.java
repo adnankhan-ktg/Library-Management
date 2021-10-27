@@ -3,15 +3,13 @@ package com.intelliatech.LibraryManagement.controller;
 import com.intelliatech.LibraryManagement.dto.UserDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
-import com.intelliatech.LibraryManagement.repository.UserRepository;
 import com.intelliatech.LibraryManagement.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -33,4 +31,26 @@ public class UserController  {
           log.info("Leaving UserController in createUser()");
           return errorMessage;
     }
+
+    @GetMapping("/getUsers")
+    public List<UserDto> getUsers() throws BusinessException
+    {
+        log.info("Inside UserController in getUsers()");
+        List<UserDto> listOfUser = this.userService.getUsers();
+        log.info("Leaving UserController in getUsers()");
+        return listOfUser;
+    }
+
+
+    @GetMapping("/getUser/{userId}")
+    public UserDto getUser(@PathVariable("userId") long userId) throws BusinessException
+    {
+        log.info("Inside UserController in getUsers()");
+        UserDto userDto = this.userService.getUser(userId);
+        log.info("Leaving UserController in getUsers()");
+        return userDto;
+
+    }
+
+
 }

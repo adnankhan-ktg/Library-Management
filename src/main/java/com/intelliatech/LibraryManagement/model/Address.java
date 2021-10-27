@@ -16,7 +16,7 @@ public class Address {
     @Column(name = "address_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long addressId;
-    @Column(name = "nearBy")
+    @Column(name = "near_by")
     private String nearBy;
     @Column(name = "zipcode")
     private String zipcode;
