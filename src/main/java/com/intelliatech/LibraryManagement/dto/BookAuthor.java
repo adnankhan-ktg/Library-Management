@@ -18,5 +18,6 @@ public class BookAuthor {
     private String authorName;
     private String email;
     private Address address;
+    @ManyToOne
     private Book book;
 }

@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.dto;
 
+import com.intelliatech.LibraryManagement.model.BookAuthor;
 import com.intelliatech.LibraryManagement.model.BookPublisher;
 import com.intelliatech.LibraryManagement.model.Subject;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +21,5 @@ public class BookDto {
     private String bookPublishedDate;
     private Subject subject;
     private BookPublisher bookPublisher;
+    private List<BookAuthor> bookAuthors;
 }

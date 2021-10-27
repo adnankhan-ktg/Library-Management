@@ -1,9 +1,12 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
+import com.intelliatech.LibraryManagement.dto.BookAuthor;
 import com.intelliatech.LibraryManagement.dto.BookDto;
+import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import com.intelliatech.LibraryManagement.model.Book;
+import com.intelliatech.LibraryManagement.model.Student;
 import com.intelliatech.LibraryManagement.repository.BookRepository;
 import com.intelliatech.LibraryManagement.service.BookService;
 import org.slf4j.Logger;
@@ -26,7 +29,7 @@ public class BookServiceImpl implements BookService {
         Book book_1 = new Book();
         //Copy value Book Entity to BookDto
         BeanUtils.copyProperties(bookDto,book_1);
-        book_1.setBookPublisher(bookDto.getBookPublisher());
+        book_1.setBookAuthors(bookDto.getBookAuthors());
         Book book_2 = this.bookRepository.save(book_1);
         if(book_2 == null)
         {

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +26,6 @@ public class Book {
     private Subject subject;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private BookPublisher bookPublisher;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<BookAuthor> bookAuthors;
 }
