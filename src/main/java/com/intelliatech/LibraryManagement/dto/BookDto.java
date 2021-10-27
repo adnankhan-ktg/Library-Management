@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.dto;
 
+import com.intelliatech.LibraryManagement.model.BookPublisher;
 import com.intelliatech.LibraryManagement.model.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,4 +18,5 @@ public class BookDto {
     private long numberOfPages;
     private String bookPublishedDate;
     private Subject subject;
+    private BookPublisher bookPublisher;
 }

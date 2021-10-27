@@ -77,10 +77,15 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDto getSubject(long subjectId) {
+    public SubjectDto getSubject(long subjectId) throws BusinessException{
         log.info("Inside SubjectServiceImpl in getSubject()");
         //Database call
         Subject subject = this.subjectRepository.findBySubjectId(subjectId);
+        if(subject == null)
+        {
+            log.info("throw exception");
+            throw new BusinessException(404,"subject not found");
+        }
         //SubjectDto type of Object create
         SubjectDto subjectDto = new SubjectDto();
         //Subject entity to SubjectDto

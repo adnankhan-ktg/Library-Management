@@ -20,7 +20,7 @@ public class BookPublisher {
     private String publisherName;
     @Column(name = "email")
     private String email;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;
 
 }

@@ -23,6 +23,6 @@ public class Book {
     private String bookPublishedDate;
     @ManyToOne
     private Subject subject;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private BookPublisher bookPublisher;
 }
