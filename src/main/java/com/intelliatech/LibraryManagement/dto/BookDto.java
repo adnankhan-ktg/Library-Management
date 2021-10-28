@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -18,9 +19,9 @@ public class BookDto {
     private long bookId;
     private String bookName;
     private long numberOfPages;
-    private String bookPublishedDate;
-    private boolean isActive;
-    private boolean isAvailable;
+    private Date bookPublishedDate;
+    private int isActive;
+    private int isAvailable;
     private Subject subject;
     private BookPublisher bookPublisher;
     private List<BookAuthor> bookAuthors;

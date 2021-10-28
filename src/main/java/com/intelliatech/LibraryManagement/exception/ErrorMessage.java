@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ErrorMessage {
 
     private String Message;
-    private Integer responseCode;
+    private int responseCode;
 
 
 }

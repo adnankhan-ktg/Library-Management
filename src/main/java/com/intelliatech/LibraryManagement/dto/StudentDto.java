@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 
 @Data
 @AllArgsConstructor
@@ -18,8 +20,8 @@ public class StudentDto {
     private String mobileNumber;
     private String gender;
     private String dateOfBirth;
-    private String registrationDate;
-    private boolean isActive;
+    private Date registrationDate;
+    private int isActive;
     private Address address;
 
 }

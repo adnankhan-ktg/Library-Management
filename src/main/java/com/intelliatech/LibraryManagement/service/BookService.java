@@ -11,6 +11,7 @@ public interface BookService {
 
     ErrorMessage createBook(BookDto bookDto) throws BusinessException;
     List<BookDto> getBooks() throws BusinessException;
+    ErrorMessage studentBookIssued(long studentId,long bookId)throws BusinessException;
 
 
 }

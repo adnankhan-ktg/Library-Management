@@ -12,7 +12,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,6 +42,11 @@ public class StudentServiceImpl implements StudentService {
         BeanUtils.copyProperties(studentDto,student_2);
         //Set Student Address from StudentDto
         student_2.setAddress(studentDto.getAddress());
+        //Set 1 for active student and 0 of deActive student
+        student_2.setIsActive(1);
+
+        student_2.setRegistrationDate(new Date());
+
         //Save Student Object
         Student student_3 = this.studentRepository.save(student_2);
         if(student_3 != null)

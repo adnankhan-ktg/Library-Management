@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -21,11 +22,12 @@ public class Book {
     @Column(name = "number_of_pages")
     private long numberOfPages;
     @Column(name = "book_published_date")
-    private String bookPublishedDate;
+    @Temporal(TemporalType.DATE)
+    private Date bookPublishedDate;
     @Column(name = "is_active")
-    private boolean isActive;
+    private int isActive;
     @Column(name = "is_available")
-    private boolean isAvailable;
+    private int isAvailable;
     @ManyToOne
     private Subject subject;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
