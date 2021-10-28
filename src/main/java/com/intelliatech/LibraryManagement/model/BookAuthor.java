@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,14 @@ public class BookAuthor {
     @Column(name = "book_author_id")
     private long authorId;
     private String authorName;
-    private String email;
-    @OneToOne
-    private Address address;
+
     @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "book_id")
     private Book book;
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
 }

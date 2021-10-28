@@ -6,18 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookAuthor {
+public class BookAuthorDto {
 
     private long authorId;
     private String authorName;
-    private String email;
-    private Address address;
-    @ManyToOne
     private Book book;
 }

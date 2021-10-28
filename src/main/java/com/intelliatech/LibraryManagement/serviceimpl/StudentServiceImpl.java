@@ -34,6 +34,7 @@ public class StudentServiceImpl implements StudentService {
         //Student Entity Object
          Student student_2 = new Student();
         //StudentDto to Student Entity
+
         BeanUtils.copyProperties(studentDto,student_2);
         //Set Student Address from StudentDto
         student_2.setAddress(studentDto.getAddress());

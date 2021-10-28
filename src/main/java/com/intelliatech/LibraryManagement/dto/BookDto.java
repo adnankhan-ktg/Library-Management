@@ -19,6 +19,8 @@ public class BookDto {
     private String bookName;
     private long numberOfPages;
     private String bookPublishedDate;
+    private boolean isActive;
+    private boolean isAvailable;
     private Subject subject;
     private BookPublisher bookPublisher;
     private List<BookAuthor> bookAuthors;

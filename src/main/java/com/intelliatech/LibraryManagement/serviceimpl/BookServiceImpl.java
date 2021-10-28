@@ -1,12 +1,9 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
-import com.intelliatech.LibraryManagement.dto.BookAuthor;
 import com.intelliatech.LibraryManagement.dto.BookDto;
-import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import com.intelliatech.LibraryManagement.model.Book;
-import com.intelliatech.LibraryManagement.model.Student;
 import com.intelliatech.LibraryManagement.repository.BookRepository;
 import com.intelliatech.LibraryManagement.service.BookService;
 import org.slf4j.Logger;
@@ -25,12 +22,19 @@ public class BookServiceImpl implements BookService {
     @Override
     public ErrorMessage createBook(BookDto bookDto) throws BusinessException {
         log.info("Inside BookServiceImpl in createBook()");
+
         //Create Book Entity type of Object
         Book book_1 = new Book();
+
         //Copy value Book Entity to BookDto
         BeanUtils.copyProperties(bookDto,book_1);
+
+         //Set number of authors in the Book entity
         book_1.setBookAuthors(bookDto.getBookAuthors());
+
+        //Database call
         Book book_2 = this.bookRepository.save(book_1);
+
         if(book_2 == null)
         {
             log.info("throw exception");
@@ -41,12 +45,12 @@ public class BookServiceImpl implements BookService {
             return new ErrorMessage("Book Successfully created",200);
         }
 
-
-
     }
 
     @Override
     public List<BookDto> getBooks() throws BusinessException {
         return null;
     }
+
+
 }
