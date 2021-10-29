@@ -38,7 +38,7 @@ public class Student {
     @Column(name = "number_of_book_issued")
     private int numberOfBookIssued;
     @Column(name = "total_penalty")
-    private int totalPenalty;
+    private long totalPenalty;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;
 

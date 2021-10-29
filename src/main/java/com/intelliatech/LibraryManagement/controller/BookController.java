@@ -2,6 +2,7 @@ package com.intelliatech.LibraryManagement.controller;
 
 import com.intelliatech.LibraryManagement.dto.BookDto;
 import com.intelliatech.LibraryManagement.dto.StudentBookIssuedDto;
+import com.intelliatech.LibraryManagement.dto.StudentBookReturnedDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import com.intelliatech.LibraryManagement.service.BookService;
@@ -47,6 +48,17 @@ public class BookController {
           return errorMessage;
 
       }
+
+      @PostMapping("/student/deAllocate")
+      public ErrorMessage studentBookReturned(@RequestBody StudentBookReturnedDto studentBookReturnedDto) throws Exception
+      {
+          log.info("Inside BookController in studentBookReturned()");
+          ErrorMessage errorMessage = this.bookService.studentBookReturned(studentBookReturnedDto.getStudentId(),studentBookReturnedDto.getBookId());
+          log.info("Leaving BookController in studentBookReturned()");
+          return errorMessage;
+      }
+
+
 
 
 

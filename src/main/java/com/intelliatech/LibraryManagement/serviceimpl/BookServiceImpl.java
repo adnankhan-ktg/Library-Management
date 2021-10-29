@@ -115,7 +115,7 @@ public class BookServiceImpl implements BookService {
         //check student number of book issued(out of limit or not)
         if(student.getNumberOfBookIssued() >= 5)
         {
-            throw new BusinessException(400,student.getFirstName()+"has maximum number of books");
+            throw new BusinessException(400,student.getFirstName()+" has maximum number of books");
         }
         //Check book status is it available or active or not
         else if(book.getIsAvailable() == 0 || book.getIsActive() == 0)
@@ -157,11 +157,63 @@ public class BookServiceImpl implements BookService {
                 throw new BusinessException(400,"Bad Request");
             }else{
                 log.info("Leaving BookServiceImpl studentBookIssued()");
-                return new ErrorMessage("The record succesfully added",200);
+                return new ErrorMessage("The record successfully added",200);
             }
 
 
         }
+
+
+    }
+
+
+    @Override
+    public ErrorMessage studentBookReturned(long studentId, long bookId) throws Exception {
+        log.info("Inside BooServiceImpl in studentBookReturned()");
+        StudentBookIssued studentBookIssued =this.studentBookIssuedRepository.findByStudentIdAndBookId(studentId,bookId);
+        if(studentBookIssued == null)
+        {
+            throw new BusinessException(404,"Record Not Found");
+        }
+        if(studentBookIssued.getIsIssued() != 1 || studentBookIssued.getIsReturned() != 0)
+        {
+            throw new BusinessException(420,"Book UnAssigned");
+        }
+
+        //Get Book Issued Date from studentBookIssued
+        Date bookIssuedDate = studentBookIssued.getBookIssuedDate();
+        //Assign current date
+        Date bookReturnedDate = new Date();
+        //Set book returned date in the entity
+        studentBookIssued.setBookReturnDate(new Date());
+        //Calculate book assigned days
+        long difference_In_Time = bookReturnedDate.getTime() - bookIssuedDate.getTime();
+        long difference_In_Days = (difference_In_Time/(1000 * 60 * 60 * 24)) % 365;
+        //Check issued days over or not
+        long extraDays = 0;
+        if (difference_In_Days > 7)
+        {
+            extraDays = difference_In_Days - 7;
+            studentBookIssued.setPenalty(extraDays * 10);
+        }
+        //Set isIssued status by not(0)
+        studentBookIssued.setIsIssued(0);
+        //Set IsReturned status by yes(1)
+        studentBookIssued.setIsReturned(1);
+        //Get Student Object from database on the basis of studentId
+        Student student = this.studentRepository.findByStudentId(studentId);
+        student.setNumberOfBookIssued(student.getNumberOfBookIssued() - 1);
+        student.setTotalPenalty(student.getTotalPenalty() + extraDays * 10);
+        //Get Book Object from database on the basis of bookId
+        Book book = this.bookRepository.findByBookId(bookId);
+        book.setIsAvailable(1);
+        //Update the Records
+        this.bookRepository.save(book);
+        this.studentRepository.save(student);
+        this.studentBookIssuedRepository.save(studentBookIssued);
+
+
+     return new ErrorMessage("Successfully Book Returned",200);
 
 
     }
