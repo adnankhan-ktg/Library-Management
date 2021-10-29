@@ -23,7 +23,7 @@ public class UserDto {
     private String gender;
     private String dateOfBirth;
     private String registrationDate;
-    private boolean isActive;
+    private int isActive;
     private Address address;
 
 

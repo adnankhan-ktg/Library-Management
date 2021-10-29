@@ -22,7 +22,7 @@ public class StudentController {
     private static final Logger log = LoggerFactory.getLogger(StudentController.class);
 
     @PostMapping("/create")
-    public ErrorMessage createStudent(@RequestBody StudentDto studentDto) throws BusinessException
+    public ErrorMessage createStudent(@RequestBody StudentDto studentDto) throws Exception
     {
         log.info("Inside StudentController in createStudent()");
          ErrorMessage errorMessage = this.studentService.createStudent(studentDto);

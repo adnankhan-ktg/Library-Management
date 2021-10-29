@@ -34,7 +34,7 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private StudentBookIssuedRepository studentBookIssuedRepository;
     @Override
-    public ErrorMessage createBook(BookDto bookDto) throws BusinessException {
+    public ErrorMessage createBook(BookDto bookDto) throws Exception {
         log.info("Inside BookServiceImpl in createBook()");
 
         //Create Book Entity type of Object
@@ -45,6 +45,8 @@ public class BookServiceImpl implements BookService {
 
          //Set number of authors in the Book entity
         book_1.setBookAuthors(bookDto.getBookAuthors());
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(bookDto.getBookPublishedDate());
+        book_1.setBookPublishedDate(date1);
         book_1.setIsAvailable(1);
         book_1.setIsActive(1);
         //Database call
@@ -99,6 +101,16 @@ public class BookServiceImpl implements BookService {
         Book book = this.bookRepository.findByBookId(bookId);
         //Get student by studentId
         Student student = this.studentRepository.findByStudentId(studentId);
+        //Check student exists or not
+        if(student == null)
+        {
+            throw new BusinessException(404,"Student not found");
+        }
+        //Check book exists or not
+        if(book == null)
+        {
+            throw new BusinessException(404,"Book not found");
+        }
 
         //check student number of book issued(out of limit or not)
         if(student.getNumberOfBookIssued() >= 5)
@@ -122,6 +134,9 @@ public class BookServiceImpl implements BookService {
             studentBookIssued.setBookName(book.getBookName());
             studentBookIssued.setBookSubject(book.getSubject().getSubjectName());
             studentBookIssued.setBookIssuedDate(new Date());
+            studentBookIssued.setIsIssued(1);
+            studentBookIssued.setIsReturned(0);
+            studentBookIssued.setStudentDateOfBirth(student.getDateOfBirth());
 //            studentBookIssued.setBookReturnDate(strDate);
             studentBookIssued.setPenalty(0);
             //update book

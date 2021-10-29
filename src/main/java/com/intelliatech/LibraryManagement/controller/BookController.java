@@ -20,7 +20,7 @@ public class BookController {
     private BookService bookService;
 
      @PostMapping("/create")
-      public ErrorMessage createBook(@RequestBody BookDto bookDto)throws BusinessException
+      public ErrorMessage createBook(@RequestBody BookDto bookDto)throws Exception
       {
           log.info("Inside BookController in createBook()");
           ErrorMessage errorMessage = this.bookService.createBook(bookDto);

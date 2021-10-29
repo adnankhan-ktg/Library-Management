@@ -27,7 +27,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentRepository studentRepository;
 
     @Override
-    public ErrorMessage createStudent(StudentDto studentDto) throws BusinessException {
+    public ErrorMessage createStudent(StudentDto studentDto) throws Exception {
         log.info("Inside StudentServiceImpl in createStudent()");
         //Check Student already exists or not
         Student student_1 = this.studentRepository.findByEmailOrMobileNumber(studentDto.getEmail(),studentDto.getMobileNumber());
@@ -37,8 +37,11 @@ public class StudentServiceImpl implements StudentService {
         }
         //Student Entity Object
          Student student_2 = new Student();
-        //StudentDto to Student Entity
 
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(studentDto.getDateOfBirth());
+        student_2.setDateOfBirth(date1);
+
+        //StudentDto to Student Entity
         BeanUtils.copyProperties(studentDto,student_2);
         //Set Student Address from StudentDto
         student_2.setAddress(studentDto.getAddress());

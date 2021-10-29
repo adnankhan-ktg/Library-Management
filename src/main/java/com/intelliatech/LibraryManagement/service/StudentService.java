@@ -7,7 +7,7 @@ import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import java.util.List;
 
 public interface StudentService {
-    ErrorMessage createStudent(StudentDto studentDto) throws BusinessException;
+    ErrorMessage createStudent(StudentDto studentDto) throws Exception;
     List<StudentDto> getStudents()throws BusinessException;
     StudentDto getStudent(long studentId) throws BusinessException;
 }

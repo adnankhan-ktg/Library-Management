@@ -15,7 +15,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
 //    private PasswordEncoder passwordEncoder;
 
     @Override
-    public ErrorMessage createUser(UserDto userDto) throws BusinessException{
+    public ErrorMessage createUser(UserDto userDto) throws Exception{
          log.info("Inside UserServiceImpl in createUser()");
 
           //Check User already exists or not
@@ -47,6 +49,9 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userDto,user);
         user.setAddress(userDto.getAddress());
         user.setPassword(userDto.getConfirmPassword());
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(userDto.getDateOfBirth());
+        user.setDateOfBirth(date1);
+        user.setRegistrationDate(new Date());
         //Make User username password in the encrypted form
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User user_1 = this.userRepository.save(user);

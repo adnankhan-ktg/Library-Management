@@ -19,7 +19,7 @@ public class BookDto {
     private long bookId;
     private String bookName;
     private long numberOfPages;
-    private Date bookPublishedDate;
+    private String bookPublishedDate;
     private int isActive;
     private int isAvailable;
     private Subject subject;

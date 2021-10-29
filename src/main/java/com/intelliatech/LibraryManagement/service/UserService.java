@@ -8,7 +8,7 @@ import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import java.util.List;
 
 public interface UserService {
-    ErrorMessage createUser(UserDto userDto) throws BusinessException;
+    ErrorMessage createUser(UserDto userDto) throws Exception;
     ErrorMessage login(LoginDto loginDto) throws BusinessException;
     List<UserDto> getUsers() throws BusinessException;
     UserDto getUser(long userId) throws BusinessException;

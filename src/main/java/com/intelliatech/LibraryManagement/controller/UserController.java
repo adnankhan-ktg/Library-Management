@@ -24,7 +24,7 @@ public class UserController  {
 
     //create new user
     @PostMapping("/create")
-    public ErrorMessage createUser(@RequestBody UserDto userDto) throws BusinessException
+    public ErrorMessage createUser(@RequestBody UserDto userDto) throws Exception
     {
         log.info(" Inside UserController in createUser() ");
           ErrorMessage errorMessage  =  this.userService.createUser(userDto);

@@ -40,4 +40,8 @@ public class StudentBookIssued {
     private Date bookReturnDate;
     @Column(name = "penalty")
     private long penalty;
+    @Column(name = "is_returned")
+    private int isReturned;
+    @Column(name = "is_issued")
+    private int isIssued;
 }

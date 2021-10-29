@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BookService {
 
-    ErrorMessage createBook(BookDto bookDto) throws BusinessException;
+    ErrorMessage createBook(BookDto bookDto) throws Exception;
     List<BookDto> getBooks() throws BusinessException;
     ErrorMessage studentBookIssued(long studentId,long bookId)throws BusinessException;
 

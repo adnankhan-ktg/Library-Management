@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -31,11 +32,13 @@ public class User {
     @Column(name = "gender")
     private String gender;
     @Column(name = "date_of_birth")
-    private String dateOfBirth;
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
     @Column(name = "registration_date")
-    private String registrationDate;
+    @Temporal(TemporalType.DATE)
+    private Date registrationDate;
     @Column(name = "is_active")
-    private boolean isActive;
+    private int isActive;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;
