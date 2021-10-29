@@ -1,6 +1,8 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
 import com.intelliatech.LibraryManagement.dto.BookDto;
+import com.intelliatech.LibraryManagement.dto.BookIssuedDto;
+import com.intelliatech.LibraryManagement.dto.BookIssuedListsDto;
 import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
@@ -214,6 +216,64 @@ public class BookServiceImpl implements BookService {
 
 
      return new ErrorMessage("Successfully Book Returned",200);
+
+
+    }
+
+    @Override
+    public BookDto getBook(long id) throws BusinessException {
+        log.info("Inside BookServiceImpl in getBook()");
+         Book book = this.bookRepository.findByBookId(id);
+        if(book == null)
+        {
+            log.error("Throw exception book not found");
+            throw new BusinessException(404,"Book Not Found");
+        }
+        BookDto bookDto = new BookDto();
+        BeanUtils.copyProperties(book,bookDto);
+        log.info("Leaving BookServiceImpl getBook()");
+        return bookDto;
+    }
+
+    @Override
+    public BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId) throws Exception{
+            log.info("Inside BookServiceImpl in getIssuedBookRecord()");
+
+             //Fetch Issued book records for specific student
+             List<StudentBookIssued> listOfIssuedBook = this.studentBookIssuedRepository.findByStudentIdAndIsIssued(studentId,1);
+             List<StudentBookIssued> listOfReturnedBook = this.studentBookIssuedRepository.findByStudentIdAndIsReturned(studentId,1);
+
+
+             //Create BookIssuedDto type of List
+             List<BookIssuedDto> listOfIssuedBookDto = new ArrayList<>();
+             List<BookIssuedDto> listOfReturnedBookDto = new ArrayList<>();
+
+             //Copy list of StudentBookIssued Entity to StudentBookIssuedDto
+             if(listOfIssuedBook != null) {
+                 for(StudentBookIssued record : listOfIssuedBook) {
+                     BookIssuedDto bookIssuedDto = new BookIssuedDto();
+                     BeanUtils.copyProperties(record, bookIssuedDto);
+                     listOfIssuedBookDto.add(bookIssuedDto);
+                 }
+             }
+
+
+            if(listOfReturnedBook != null) {
+            for(StudentBookIssued record : listOfReturnedBook) {
+                BookIssuedDto bookIssuedDto = new BookIssuedDto();
+                BeanUtils.copyProperties(record, bookIssuedDto);
+                listOfReturnedBookDto.add(bookIssuedDto);
+            }
+        }
+            //Create BookIssuedListsDto type of Object
+        BookIssuedListsDto bookIssuedListsDto = new BookIssuedListsDto();
+
+        //Add both list in the BookIssuedListsDto type of Object
+        bookIssuedListsDto.setListOfIssuedBook(listOfIssuedBookDto);
+        bookIssuedListsDto.setListOfReturnedBook(listOfReturnedBookDto);
+
+        log.info("Leaving BookServiceImpl in getIssuedBookRecord()");
+        return bookIssuedListsDto;
 
 
     }

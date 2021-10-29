@@ -1,8 +1,6 @@
 package com.intelliatech.LibraryManagement.controller;
 
-import com.intelliatech.LibraryManagement.dto.BookDto;
-import com.intelliatech.LibraryManagement.dto.StudentBookIssuedDto;
-import com.intelliatech.LibraryManagement.dto.StudentBookReturnedDto;
+import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import com.intelliatech.LibraryManagement.service.BookService;
@@ -38,6 +36,17 @@ public class BookController {
           return listOfBookDto;
       }
 
+      @GetMapping("/getBook/{bookId}")
+      public BookDto getBook(@PathVariable("bookId") long bookId)throws BusinessException
+      {
+          log.info("Inside BookController in getBook()");
+          BookDto bookDto = this.bookService.getBook(bookId);
+          log.info("Leaving BookController in getBook()");
+          return bookDto;
+      }
+
+
+
 
        @PostMapping("/student/allocate")
       public ErrorMessage studentBookIssued(@RequestBody StudentBookIssuedDto studentBookIssuedDto) throws BusinessException
@@ -57,6 +66,18 @@ public class BookController {
           log.info("Leaving BookController in studentBookReturned()");
           return errorMessage;
       }
+
+      @GetMapping("/get/assigned/returned/books/{studentId}")
+      public BookIssuedListsDto getIssuedBookRecord(@PathVariable("studentId") long studentId) throws Exception
+      {
+          log.info("Inside BookController in getIssuedBookRecord");
+          BookIssuedListsDto bookIssuedDtos = this.bookService.getIssuedBookRecordsAndReturnedBookRecords(studentId);
+          log.info("Leaving BookController in getIssuedBookRecord");
+          return bookIssuedDtos;
+      }
+
+
+
 
 
 
