@@ -1,7 +1,10 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
+import com.intelliatech.LibraryManagement.config.JwtTokenUtil;
+import com.intelliatech.LibraryManagement.config.JwtUserDetailsService;
 import com.intelliatech.LibraryManagement.dto.LoginDto;
 import com.intelliatech.LibraryManagement.dto.StudentDto;
+import com.intelliatech.LibraryManagement.dto.TokenDto;
 import com.intelliatech.LibraryManagement.dto.UserDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
@@ -13,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -25,8 +30,13 @@ public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+       private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+       private JwtUserDetailsService jwtUserDetailsService;
 
     @Override
     public ErrorMessage createUser(UserDto userDto) throws Exception{
@@ -41,7 +51,7 @@ public class UserServiceImpl implements UserService {
           //Compare new password and confirm password
         if((userDto.getNewPassword().equals(userDto.getConfirmPassword())) == false)
            {
-               throw new BusinessException(406,"password doesn't mathe");
+               throw new BusinessException(406,"password doesn't match");
            }
         //UserEntity Object
         User user = new User();
@@ -52,8 +62,9 @@ public class UserServiceImpl implements UserService {
         Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(userDto.getDateOfBirth());
         user.setDateOfBirth(date1);
         user.setRegistrationDate(new Date());
+        user.setIsActive(1);
         //Make User username password in the encrypted form
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User user_1 = this.userRepository.save(user);
         if(user_1 != null)
         {
@@ -126,4 +137,32 @@ public class UserServiceImpl implements UserService {
             log.info("Leaving UserServiceImpl in getUser()");
             return userDto;
     }
-}}
+}
+
+
+    @Override
+    public TokenDto generateToken(LoginDto loginDto) throws BusinessException {
+        log.info("Inside UserServiceImpl in generateToken()");
+        User user = this.userRepository.findByUsernameOrEmailOrMobileNumber(loginDto.getUsername(),loginDto.getUsername(),loginDto.getUsername());
+        if(user != null)
+        {
+
+            if(passwordEncoder.matches(loginDto.getPassword(),user.getPassword()))
+            {
+                UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(loginDto.getUsername());
+                String token = this.jwtTokenUtil.generateToken(userDetails);
+                log.info("Generate token ");
+                log.info("Leaving UserServiceImpl in generateToken()");
+                return new TokenDto(token);
+            }{
+                log.error("Throw Password doesn't match Exception");
+                throw new BusinessException(406,"Password not acceptable corresponding to username");
+        }
+        }
+        else{
+            log.error("Throw User not found Exception");
+            throw new BusinessException(404,"User Not Found");
+        }
+
+    }
+}

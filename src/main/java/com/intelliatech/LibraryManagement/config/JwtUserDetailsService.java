@@ -22,7 +22,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	
              User user = new User();
              
-             user = this.userRepostitory.findByUsername(username);
+             user = this.userRepository.findByUsernameOrEmailOrMobileNumber(username,username,username);
              if(user == null)
              {
             	 throw new UsernameNotFoundException(username);

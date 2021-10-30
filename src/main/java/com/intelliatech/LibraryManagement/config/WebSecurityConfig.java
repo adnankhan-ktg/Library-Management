@@ -1,6 +1,6 @@
 package com.intelliatech.LibraryManagement.config;
 
-import com.portal.services.JwtUserDetailsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// don't authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/registration_otp","/register","/login","/get_passwordforget_otp","/validate_otp","/update_password").permitAll().
+				.antMatchers("/login/generate/token","/user/create").permitAll().
 				// all other requests need to be authenticated
 						anyRequest().authenticated().and().
 				// make sure we use state less session; session won't be used to
