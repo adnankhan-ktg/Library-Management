@@ -1,9 +1,6 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
-import com.intelliatech.LibraryManagement.dto.BookDto;
-import com.intelliatech.LibraryManagement.dto.BookIssuedDto;
-import com.intelliatech.LibraryManagement.dto.BookIssuedListsDto;
-import com.intelliatech.LibraryManagement.dto.StudentDto;
+import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import com.intelliatech.LibraryManagement.model.Book;
@@ -13,6 +10,7 @@ import com.intelliatech.LibraryManagement.repository.BookRepository;
 import com.intelliatech.LibraryManagement.repository.StudentBookIssuedRepository;
 import com.intelliatech.LibraryManagement.repository.StudentRepository;
 import com.intelliatech.LibraryManagement.service.BookService;
+import com.intelliatech.LibraryManagement.service.helper.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +33,8 @@ public class BookServiceImpl implements BookService {
     private StudentRepository studentRepository;
     @Autowired
     private StudentBookIssuedRepository studentBookIssuedRepository;
+
+    private MailService mailService;
     @Override
     public ErrorMessage createBook(BookDto bookDto) throws Exception {
         log.info("Inside BookServiceImpl in createBook()");
@@ -159,6 +159,7 @@ public class BookServiceImpl implements BookService {
                 throw new BusinessException(400,"Bad Request");
             }else{
                 log.info("Leaving BookServiceImpl studentBookIssued()");
+//                mailService.sendMail(new MailRequestDto(student.getEmail(),student.getFirstName()+" "+student.getLastName()+" Book "+book.getBookName()+" Issued to you","Book Issued"));
                 return new ErrorMessage("The record successfully added",200);
             }
 
@@ -215,6 +216,9 @@ public class BookServiceImpl implements BookService {
         this.studentBookIssuedRepository.save(studentBookIssued);
 
 
+
+
+//        mailService.sendMail(new MailRequestDto(student.getEmail(),student.getFirstName()+" "+student.getLastName()+" Book "+book.getBookName()+" deallocate to you","Book Issued"));
      return new ErrorMessage("Successfully Book Returned",200);
 
 

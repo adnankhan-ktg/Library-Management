@@ -2,16 +2,14 @@ package com.intelliatech.LibraryManagement.serviceimpl;
 
 import com.intelliatech.LibraryManagement.config.JwtTokenUtil;
 import com.intelliatech.LibraryManagement.config.JwtUserDetailsService;
-import com.intelliatech.LibraryManagement.dto.LoginDto;
-import com.intelliatech.LibraryManagement.dto.StudentDto;
-import com.intelliatech.LibraryManagement.dto.TokenDto;
-import com.intelliatech.LibraryManagement.dto.UserDto;
+import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import com.intelliatech.LibraryManagement.model.Student;
 import com.intelliatech.LibraryManagement.model.User;
 import com.intelliatech.LibraryManagement.repository.UserRepository;
 import com.intelliatech.LibraryManagement.service.UserService;
+import com.intelliatech.LibraryManagement.service.helper.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +35,8 @@ public class UserServiceImpl implements UserService {
        private JwtTokenUtil jwtTokenUtil;
     @Autowired
        private JwtUserDetailsService jwtUserDetailsService;
+    @Autowired
+    private MailService mailService;
 
     @Override
     public ErrorMessage createUser(UserDto userDto) throws Exception{
@@ -68,6 +68,9 @@ public class UserServiceImpl implements UserService {
         User user_1 = this.userRepository.save(user);
         if(user_1 != null)
         {
+            log.info("Sent registration mail to the user");
+            //Send account signup notification to the user
+            mailService.sendMail(new MailRequestDto(user_1.getEmail(),user_1.getFirstName()+" "+user_1.getLastName()+" Your library User account successfully created","Account Registration"));
             log.info("leaving createUser() in UserServiceImpl");
            return new ErrorMessage("user successfully created",200);
         }else{
@@ -151,6 +154,9 @@ public class UserServiceImpl implements UserService {
             {
                 UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(loginDto.getUsername());
                 String token = this.jwtTokenUtil.generateToken(userDetails);
+                log.info(" Login notification sent to the user");
+                mailService.sendMail(new MailRequestDto(user.getEmail(),user.getFirstName()+" "+user.getLastName()+" You had login the account just","Login Account"));
+
                 log.info("Generate token ");
                 log.info("Leaving UserServiceImpl in generateToken()");
                 return new TokenDto(token);

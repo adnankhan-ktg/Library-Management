@@ -1,11 +1,13 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
+import com.intelliatech.LibraryManagement.dto.MailRequestDto;
 import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import com.intelliatech.LibraryManagement.model.Student;
 import com.intelliatech.LibraryManagement.repository.StudentRepository;
 import com.intelliatech.LibraryManagement.service.StudentService;
+import com.intelliatech.LibraryManagement.service.helper.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -25,6 +27,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private MailService mailService;
 
     @Override
     public ErrorMessage createStudent(StudentDto studentDto) throws Exception {
@@ -54,6 +58,10 @@ public class StudentServiceImpl implements StudentService {
         Student student_3 = this.studentRepository.save(student_2);
         if(student_3 != null)
         {
+            log.info("Sent student registration notification to the student");
+            //Sent notification to the student for registration
+            mailService.sendMail(new MailRequestDto(student_3.getEmail(),student_3.getFirstName()+" "+student_3.getLastName()+" Your Library account successfully created","Account Registration"));
+
             log.info("leaving createUser() in StudentServiceImpl");
             return new ErrorMessage("Student successfully created",200);
         }else{
