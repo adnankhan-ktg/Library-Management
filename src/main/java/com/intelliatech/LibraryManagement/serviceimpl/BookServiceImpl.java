@@ -173,14 +173,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public ErrorMessage studentBookReturned(long studentId, long bookId) throws Exception {
         log.info("Inside BooServiceImpl in studentBookReturned()");
-        StudentBookIssued studentBookIssued =this.studentBookIssuedRepository.findByStudentIdAndBookId(studentId,bookId);
+        StudentBookIssued studentBookIssued = this.studentBookIssuedRepository.findByStudentIdAndBookIdAndIsIssued(studentId,bookId,1);
         if(studentBookIssued == null)
         {
             throw new BusinessException(404,"Record Not Found");
         }
         if(studentBookIssued.getIsIssued() != 1 || studentBookIssued.getIsReturned() != 0)
         {
-            throw new BusinessException(420,"Book UnAssigned");
+            throw new BusinessException(420,"Book not Assigned");
         }
 
         //Get Book Issued Date from studentBookIssued
