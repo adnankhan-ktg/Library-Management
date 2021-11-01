@@ -130,8 +130,8 @@ public class StudentServiceImpl implements StudentService {
         //Student Entity Object
         Student student_2 = new Student();
 
-//        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(studentDto.getDateOfBirth());
-//        student_2.setDateOfBirth(date1);
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(studentDto.getDateOfBirth());
+        student_2.setDateOfBirth(date1);
 
         //StudentDto to Student Entity
         BeanUtils.copyProperties(studentDto,student_2);
@@ -147,9 +147,9 @@ public class StudentServiceImpl implements StudentService {
         Student student_3 = this.studentRepository.save(student_2);
         if(student_3 != null)
         {
-//            log.info("Sent student registration notification to the student");
-            //Sent notification to the student for registration
-//            mailService.sendMail(new MailRequestDto(student_3.getEmail(),student_3.getFirstName()+" "+student_3.getLastName()+" Your Library account successfully created","Account Registration"));
+            log.info("Sent student registration notification to the student");
+//            Sent notification to the student for registration
+            mailService.sendMail(new MailRequestDto(student_3.getEmail(),student_3.getFirstName()+" "+student_3.getLastName()+" Your Library account successfully created","Account Registration"));
 
             log.info("leaving createUser() in StudentServiceImpl");
             return new ErrorMessage("Student successfully created",200);

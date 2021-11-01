@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDtoNew {
+    private long studentId;
     private String firstName;
-//    private String lastName;
+    private String lastName;
     private String email;
     private String mobileNumber;
     private String gender;
-//    private String dateOfBirth;
+    private String dateOfBirth;
+    private int isActive;
+    private Address address;
 
 }
