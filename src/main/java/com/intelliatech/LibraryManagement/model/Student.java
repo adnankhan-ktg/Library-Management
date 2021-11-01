@@ -39,6 +39,8 @@ public class Student {
     private int numberOfBookIssued;
     @Column(name = "total_penalty")
     private long totalPenalty;
+    @Column(name = "profile_picture")
+    private String profilePicture;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;
 

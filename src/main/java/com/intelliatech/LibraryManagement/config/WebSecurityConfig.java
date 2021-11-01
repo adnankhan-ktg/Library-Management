@@ -59,9 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// don't authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/login/generate/token","/user/create").permitAll().
+				.antMatchers("/login/generate/token","/user/create").permitAll()
 				// all other requests need to be authenticated
-						anyRequest().authenticated().and().
+				.anyRequest().authenticated().and().
 				// make sure we use state less session; session won't be used to
 				// store user's state.
 						exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

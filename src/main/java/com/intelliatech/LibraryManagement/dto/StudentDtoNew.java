@@ -4,23 +4,17 @@ import com.intelliatech.LibraryManagement.model.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
-
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDto {
-
-    private long studentId;
+public class StudentDtoNew {
     private String firstName;
-    private String lastName;
+//    private String lastName;
     private String email;
     private String mobileNumber;
     private String gender;
-    private String dateOfBirth;
-    private int isActive;
-    private Address address;
+//    private String dateOfBirth;
 
 }

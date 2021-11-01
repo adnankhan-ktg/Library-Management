@@ -2,6 +2,7 @@ package com.intelliatech.LibraryManagement.controller;
 
 
 import com.intelliatech.LibraryManagement.dto.StudentDto;
+import com.intelliatech.LibraryManagement.dto.StudentDtoNew;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ErrorMessage;
 import com.intelliatech.LibraryManagement.service.StudentService;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class StudentController {
 
     private static final Logger log = LoggerFactory.getLogger(StudentController.class);
 
+    //For Only Json data
     @PostMapping("/create")
     public ErrorMessage createStudent(@RequestBody StudentDto studentDto) throws Exception
     {
@@ -28,6 +31,17 @@ public class StudentController {
          ErrorMessage errorMessage = this.studentService.createStudent(studentDto);
          log.info("Leaving StudentController in createStudent()");
          return errorMessage;
+
+    }
+
+    //For MultipartFile and Json as well....
+    @PostMapping("/create/new")
+    public ErrorMessage createStudent_1(@RequestParam("file") MultipartFile multipartFile, StudentDtoNew studentDtoNew) throws Exception
+    {
+        log.info("Inside StudentController in createStudent()");
+        ErrorMessage errorMessage = this.studentService.createStudent_1(multipartFile,studentDtoNew);
+        log.info("Leaving StudentController in createStudent()");
+        return errorMessage;
 
     }
 
