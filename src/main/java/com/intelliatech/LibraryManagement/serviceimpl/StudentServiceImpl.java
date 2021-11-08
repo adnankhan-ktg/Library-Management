@@ -4,7 +4,7 @@ import com.intelliatech.LibraryManagement.dto.MailRequestDto;
 import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.dto.StudentDtoNew;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
-import com.intelliatech.LibraryManagement.exception.ErrorMessage;
+import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 import com.intelliatech.LibraryManagement.model.Student;
 import com.intelliatech.LibraryManagement.repository.StudentRepository;
 import com.intelliatech.LibraryManagement.service.StudentService;
@@ -17,10 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
     private FileUploadHelper fileUploadHelper;
 
     @Override
-    public ErrorMessage createStudent(StudentDto studentDto) throws Exception {
+    public ResponseMessage createStudent(StudentDto studentDto) throws Exception {
         log.info("Inside StudentServiceImpl in createStudent()");
         //Check Student already exists or not
         Student student_1 = this.studentRepository.findByEmailOrMobileNumber(studentDto.getEmail(),studentDto.getMobileNumber());
@@ -68,7 +66,7 @@ public class StudentServiceImpl implements StudentService {
             mailService.sendMail(new MailRequestDto(student_3.getEmail(),student_3.getFirstName()+" "+student_3.getLastName()+" Your Library account successfully created","Account Registration"));
 
             log.info("leaving createUser() in StudentServiceImpl");
-            return new ErrorMessage("Student successfully created",200);
+            return new ResponseMessage("Student successfully created",200);
         }else{
             log.info("throw exception");
             throw new BusinessException(400,"Bad Request");
@@ -119,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public ErrorMessage createStudent_1(MultipartFile multipartFile, StudentDtoNew studentDto) throws Exception {
+    public ResponseMessage createStudent_1(MultipartFile multipartFile, StudentDtoNew studentDto) throws Exception {
         log.info("Inside StudentServiceImpl in createStudent()");
         //Check Student already exists or not
         Student student_1 = this.studentRepository.findByEmailOrMobileNumber(studentDto.getEmail(),studentDto.getMobileNumber());
@@ -152,7 +150,7 @@ public class StudentServiceImpl implements StudentService {
             mailService.sendMail(new MailRequestDto(student_3.getEmail(),student_3.getFirstName()+" "+student_3.getLastName()+" Your Library account successfully created","Account Registration"));
 
             log.info("leaving createUser() in StudentServiceImpl");
-            return new ErrorMessage("Student successfully created",200);
+            return new ResponseMessage("Student successfully created",200);
         }else{
             log.info("throw exception");
             throw new BusinessException(400,"Bad Request");

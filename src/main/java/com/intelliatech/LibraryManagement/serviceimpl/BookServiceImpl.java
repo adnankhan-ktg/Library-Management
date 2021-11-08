@@ -2,7 +2,7 @@ package com.intelliatech.LibraryManagement.serviceimpl;
 
 import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
-import com.intelliatech.LibraryManagement.exception.ErrorMessage;
+import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 import com.intelliatech.LibraryManagement.model.Book;
 import com.intelliatech.LibraryManagement.model.Student;
 import com.intelliatech.LibraryManagement.model.StudentBookIssued;
@@ -17,10 +17,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class BookServiceImpl implements BookService {
 
     private MailService mailService;
     @Override
-    public ErrorMessage createBook(BookDto bookDto) throws Exception {
+    public ResponseMessage createBook(BookDto bookDto) throws Exception {
         log.info("Inside BookServiceImpl in createBook()");
 
         //Create Book Entity type of Object
@@ -61,7 +59,7 @@ public class BookServiceImpl implements BookService {
         }else{
             log.info("Book Successfully created");
             log.info("Leaving BookServiceImpl in createBook()");
-            return new ErrorMessage("Book Successfully created",200);
+            return new ResponseMessage("Book Successfully created",200);
         }
 
     }
@@ -97,7 +95,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public ErrorMessage studentBookIssued(long studentId, long bookId)throws BusinessException {
+    public ResponseMessage studentBookIssued(long studentId, long bookId)throws BusinessException {
         log.info("Inside StudentImpl in studentBookIssued()");
         //Get book by bookId
         Book book = this.bookRepository.findByBookId(bookId);
@@ -160,7 +158,7 @@ public class BookServiceImpl implements BookService {
             }else{
                 log.info("Leaving BookServiceImpl studentBookIssued()");
 //                mailService.sendMail(new MailRequestDto(student.getEmail(),student.getFirstName()+" "+student.getLastName()+" Book "+book.getBookName()+" Issued to you","Book Issued"));
-                return new ErrorMessage("The record successfully added",200);
+                return new ResponseMessage("The record successfully added",200);
             }
 
 
@@ -171,7 +169,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public ErrorMessage studentBookReturned(long studentId, long bookId) throws Exception {
+    public ResponseMessage studentBookReturned(long studentId, long bookId) throws Exception {
         log.info("Inside BooServiceImpl in studentBookReturned()");
         StudentBookIssued studentBookIssued = this.studentBookIssuedRepository.findByStudentIdAndBookIdAndIsIssued(studentId,bookId,1);
         if(studentBookIssued == null)
@@ -219,7 +217,7 @@ public class BookServiceImpl implements BookService {
 
 
 //        mailService.sendMail(new MailRequestDto(student.getEmail(),student.getFirstName()+" "+student.getLastName()+" Book "+book.getBookName()+" deallocate to you","Book Issued"));
-     return new ErrorMessage("Successfully Book Returned",200);
+     return new ResponseMessage("Successfully Book Returned",200);
 
 
     }

@@ -2,7 +2,7 @@ package com.intelliatech.LibraryManagement.controller;
 
 import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
-import com.intelliatech.LibraryManagement.exception.ErrorMessage;
+import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 import com.intelliatech.LibraryManagement.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +19,12 @@ public class BookController {
     private BookService bookService;
 
      @PostMapping("/create")
-      public ErrorMessage createBook(@RequestBody BookDto bookDto)throws Exception
+      public ResponseMessage createBook(@RequestBody BookDto bookDto)throws Exception
       {
           log.info("Inside BookController in createBook()");
-          ErrorMessage errorMessage = this.bookService.createBook(bookDto);
+          ResponseMessage responseMessage = this.bookService.createBook(bookDto);
           log.info("Leaving BookController in createBook()");
-          return errorMessage;
+          return responseMessage;
       }
 
       @GetMapping("/getBooks")
@@ -49,22 +49,22 @@ public class BookController {
 
 
        @PostMapping("/student/allocate")
-      public ErrorMessage studentBookIssued(@RequestBody StudentBookIssuedDto studentBookIssuedDto) throws BusinessException
+      public ResponseMessage studentBookIssued(@RequestBody StudentBookIssuedDto studentBookIssuedDto) throws BusinessException
       {
           log.info("Inside BookController in studentBookIssued()");
-          ErrorMessage errorMessage =this.bookService.studentBookIssued(studentBookIssuedDto.getStudentId(), studentBookIssuedDto.getBookId());
+          ResponseMessage responseMessage =this.bookService.studentBookIssued(studentBookIssuedDto.getStudentId(), studentBookIssuedDto.getBookId());
           log.info("Leaving BookController in studentBookIssued()");
-          return errorMessage;
+          return responseMessage;
 
       }
 
       @PostMapping("/student/deAllocate")
-      public ErrorMessage studentBookReturned(@RequestBody StudentBookReturnedDto studentBookReturnedDto) throws Exception
+      public ResponseMessage studentBookReturned(@RequestBody StudentBookReturnedDto studentBookReturnedDto) throws Exception
       {
           log.info("Inside BookController in studentBookReturned()");
-          ErrorMessage errorMessage = this.bookService.studentBookReturned(studentBookReturnedDto.getStudentId(),studentBookReturnedDto.getBookId());
+          ResponseMessage responseMessage = this.bookService.studentBookReturned(studentBookReturnedDto.getStudentId(),studentBookReturnedDto.getBookId());
           log.info("Leaving BookController in studentBookReturned()");
-          return errorMessage;
+          return responseMessage;
       }
 
       @GetMapping("/get/assigned/returned/books/{studentId}")

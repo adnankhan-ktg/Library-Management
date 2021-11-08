@@ -2,7 +2,7 @@ package com.intelliatech.LibraryManagement.controller;
 
 import com.intelliatech.LibraryManagement.dto.SubjectDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
-import com.intelliatech.LibraryManagement.exception.ErrorMessage;
+import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 import com.intelliatech.LibraryManagement.service.SubjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +20,12 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @PostMapping("/create")
-    public ErrorMessage createSubject(@RequestBody SubjectDto subjectDto) throws BusinessException
+    public ResponseMessage createSubject(@RequestBody SubjectDto subjectDto) throws BusinessException
     {
         log.info("Inside SubjectController in createSubject()");
-        ErrorMessage errorMessage = this.subjectService.createSubject(subjectDto);
+        ResponseMessage responseMessage = this.subjectService.createSubject(subjectDto);
         log.info("Leaving SubjectController in createSubject()");
-        return errorMessage;
+        return responseMessage;
     }
 
     @GetMapping("/getSubjects")

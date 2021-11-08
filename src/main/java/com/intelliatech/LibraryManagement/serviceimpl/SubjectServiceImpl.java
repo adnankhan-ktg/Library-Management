@@ -1,10 +1,8 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
-import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.dto.SubjectDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
-import com.intelliatech.LibraryManagement.exception.ErrorMessage;
-import com.intelliatech.LibraryManagement.model.Student;
+import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 import com.intelliatech.LibraryManagement.model.Subject;
 import com.intelliatech.LibraryManagement.repository.SubjectRepository;
 import com.intelliatech.LibraryManagement.service.SubjectService;
@@ -26,7 +24,7 @@ public class SubjectServiceImpl implements SubjectService {
     private SubjectRepository subjectRepository;
 
     @Override
-    public ErrorMessage createSubject(SubjectDto subjectDto) throws BusinessException{
+    public ResponseMessage createSubject(SubjectDto subjectDto) throws BusinessException{
            log.info("Inside SubjectServiceImpl in createSubject()");
            //find subject entity by subject code
         Subject subject_1 = this.subjectRepository.findBySubjectCode(subjectDto.getSubjectCode());
@@ -47,7 +45,7 @@ public class SubjectServiceImpl implements SubjectService {
             throw new BusinessException(400,"Bad Request");
         }else{
             log.info("Subject Successfully created");
-            return new ErrorMessage("Subject successfully created",200);
+            return new ResponseMessage("Subject successfully created",200);
         }
 
 

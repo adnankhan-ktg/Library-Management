@@ -1,6 +1,7 @@
 package com.intelliatech.LibraryManagement.service.helper;
 
 import com.intelliatech.LibraryManagement.dto.MailRequestDto;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +39,7 @@ public class MailService {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				// TODO Auto-generated method stub
-				return new PasswordAuthentication("adnan@gmail.com","123456****");
+				return new PasswordAuthentication("adnank.bca2019@ssism.org","@zeal@sikka@lifetime.org");
 			}
 		
 		 });

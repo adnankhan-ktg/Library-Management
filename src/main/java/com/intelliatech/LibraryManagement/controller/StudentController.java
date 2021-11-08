@@ -4,7 +4,7 @@ package com.intelliatech.LibraryManagement.controller;
 import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.dto.StudentDtoNew;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
-import com.intelliatech.LibraryManagement.exception.ErrorMessage;
+import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 import com.intelliatech.LibraryManagement.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,23 +25,23 @@ public class StudentController {
 
     //For Only Json data
     @PostMapping("/create")
-    public ErrorMessage createStudent(@RequestBody StudentDto studentDto) throws Exception
+    public ResponseMessage createStudent(@RequestBody StudentDto studentDto) throws Exception
     {
         log.info("Inside StudentController in createStudent()");
-         ErrorMessage errorMessage = this.studentService.createStudent(studentDto);
+         ResponseMessage responseMessage = this.studentService.createStudent(studentDto);
          log.info("Leaving StudentController in createStudent()");
-         return errorMessage;
+         return responseMessage;
 
     }
 
     //For MultipartFile and Json as well....
     @PostMapping("/create/new")
-    public ErrorMessage createStudent_1(@RequestParam("file") MultipartFile multipartFile, StudentDtoNew studentDtoNew) throws Exception
+    public ResponseMessage createStudent_1(@RequestParam("file") MultipartFile multipartFile, StudentDtoNew studentDtoNew) throws Exception
     {
         log.info("Inside StudentController in createStudent()");
-        ErrorMessage errorMessage = this.studentService.createStudent_1(multipartFile,studentDtoNew);
+        ResponseMessage responseMessage = this.studentService.createStudent_1(multipartFile,studentDtoNew);
         log.info("Leaving StudentController in createStudent()");
-        return errorMessage;
+        return responseMessage;
 
     }
 

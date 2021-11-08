@@ -4,8 +4,7 @@ import com.intelliatech.LibraryManagement.config.JwtTokenUtil;
 import com.intelliatech.LibraryManagement.config.JwtUserDetailsService;
 import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
-import com.intelliatech.LibraryManagement.exception.ErrorMessage;
-import com.intelliatech.LibraryManagement.model.Student;
+import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 import com.intelliatech.LibraryManagement.model.User;
 import com.intelliatech.LibraryManagement.repository.UserRepository;
 import com.intelliatech.LibraryManagement.service.UserService;
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService {
     private MailService mailService;
 
     @Override
-    public ErrorMessage createUser(UserDto userDto) throws Exception{
+    public ResponseMessage createUser(UserDto userDto) throws Exception{
          log.info("Inside UserServiceImpl in createUser()");
 
           //Check User already exists or not
@@ -72,7 +71,7 @@ public class UserServiceImpl implements UserService {
             //Send account signup notification to the user
             mailService.sendMail(new MailRequestDto(user_1.getEmail(),user_1.getFirstName()+" "+user_1.getLastName()+" Your library User account successfully created","Account Registration"));
             log.info("leaving createUser() in UserServiceImpl");
-           return new ErrorMessage("user successfully created",200);
+           return new ResponseMessage("user successfully created",200);
         }else{
             log.info("throw exception");
            throw new BusinessException(400,"Bad Request");
@@ -81,7 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ErrorMessage login(LoginDto loginDto) throws  BusinessException{
+    public ResponseMessage login(LoginDto loginDto) throws  BusinessException{
         log.info("Inside UserServiceImpl in login()");
         User user_1 = this.userRepository.findByUsernameOrEmailOrMobileNumber(loginDto.getUsername(),loginDto.getUsername(),loginDto.getUsername());
         if(user_1 != null)
@@ -89,7 +88,7 @@ public class UserServiceImpl implements UserService {
             if(loginDto.getPassword().equals(user_1.getPassword()))
             {
                 log.info("leaving UserServiceImpl in login()");
-                return new ErrorMessage("User login successfully",200);
+                return new ResponseMessage("User login successfully",200);
             }else{
                 log.info("Throw exception username exists but password not match");
                 throw new BusinessException(406,"Password not acceptable corresponding to username");

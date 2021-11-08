@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorMessage {
+public class ResponseMessage {
 
     private String Message;
     private int responseCode;

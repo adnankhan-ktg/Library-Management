@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CustomException {
 
     @ExceptionHandler(value = BusinessException.class)
-     public ResponseEntity<ErrorMessage> handleRecordNotFoundException(BusinessException e)
+     public ResponseEntity<ResponseMessage> handleRecordNotFoundException(BusinessException e)
      {
          System.out.println(e);
-         return new ResponseEntity<>(new ErrorMessage(e.getMessage(),e.getCode()),HttpStatus.valueOf(200));
+         return new ResponseEntity<>(new ResponseMessage(e.getMessage(),e.getCode()),HttpStatus.valueOf(200));
      }
 }

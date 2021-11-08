@@ -2,7 +2,7 @@ package com.intelliatech.LibraryManagement.controller;
 
 import com.intelliatech.LibraryManagement.dto.UserDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
-import com.intelliatech.LibraryManagement.exception.ErrorMessage;
+import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 import com.intelliatech.LibraryManagement.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +24,12 @@ public class UserController  {
 
     //create new user
     @PostMapping("/create")
-    public ErrorMessage createUser(@RequestBody UserDto userDto) throws Exception
+    public ResponseMessage createUser(@RequestBody UserDto userDto) throws Exception
     {
         log.info(" Inside UserController in createUser() ");
-          ErrorMessage errorMessage  =  this.userService.createUser(userDto);
+          ResponseMessage responseMessage =  this.userService.createUser(userDto);
           log.info("Leaving UserController in createUser()");
-          return errorMessage;
+          return responseMessage;
     }
 
     @GetMapping("/getUsers")
