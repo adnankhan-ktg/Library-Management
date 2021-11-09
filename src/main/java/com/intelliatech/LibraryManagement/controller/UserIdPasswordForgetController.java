@@ -7,10 +7,7 @@ import com.intelliatech.LibraryManagement.service.UserIdPasswordForgetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/userphase")
@@ -36,6 +33,17 @@ public class UserIdPasswordForgetController {
         log.info("Inside UserIdPasswordForgetController in validateOtp()");
         ResponseMessage  responseMessage = this.userIdPasswordForgetService.validateOtp(userIdPasswordForgetDto);
         log.info("Leaving UserIdPasswordForgetController in validateOtp()");
+        return responseMessage;
+    }
+
+
+
+    @PutMapping("/update/password")
+    public ResponseMessage updatePassword(@RequestBody UserIdPasswordForgetDto userIdPasswordForgetDto) throws Exception
+    {
+        log.info("Inside UserIdPasswordForgetController in updatePassword()");
+        ResponseMessage responseMessage = this.userIdPasswordForgetService.updatePassword(userIdPasswordForgetDto);
+        log.info("Leaving UserIdPasswordForgetController in updatePassword()");
         return responseMessage;
     }
 
