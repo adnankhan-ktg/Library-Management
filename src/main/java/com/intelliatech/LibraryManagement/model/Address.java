@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Address {
+public class    Address {
 
     @Id
     @Column(name = "address_id")

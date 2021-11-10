@@ -45,11 +45,11 @@ public class StudentController {
 
     }
 
-    @GetMapping("/getStudents")
-    public List<StudentDto> getStudents() throws BusinessException
+    @GetMapping("/getStudents/{offset}/{size}")
+    public List<StudentDto> getStudents(@PathVariable("offset") Integer offset, @PathVariable("size") Integer size) throws BusinessException
     {
         log.info("Inside StudentController in getStudent()");
-        List<StudentDto> listOfStudentDto = this.studentService.getStudents();
+        List<StudentDto> listOfStudentDto = this.studentService.getStudents(offset, size);
         log.info("Leaving StudentController in getStudent()");
         return listOfStudentDto;
     }

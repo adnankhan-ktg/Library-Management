@@ -14,6 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,10 +78,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDto> getStudents()throws BusinessException {
+    public List<StudentDto> getStudents(Integer offset, Integer size)throws BusinessException {
            log.info("Inside StudentServiceImpl in getStudents()");
+
+           //Create PageRequest Object
+        Pageable pageable = PageRequest.of(offset, size, Sort.by("StudentId").descending());
            //database call
-           List<Student> listOfStudent = this.studentRepository.findAll();
+           Page<Student> listOfStudent = this.studentRepository.findAll(pageable);
            //Create StudentDto type of list
            List<StudentDto> listOfStudentDto = new ArrayList<>();
            //Create StudentDto type of Object

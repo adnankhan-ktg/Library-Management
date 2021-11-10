@@ -11,6 +11,6 @@ import java.util.List;
 public interface StudentService {
     ResponseMessage createStudent(StudentDto studentDto) throws Exception;
     ResponseMessage createStudent_1(MultipartFile multipartFile , StudentDtoNew studentDtoNew) throws Exception;
-    List<StudentDto> getStudents()throws BusinessException;
+    List<StudentDto> getStudents(Integer offset, Integer size)throws BusinessException;
     StudentDto getStudent(long studentId) throws BusinessException;
 }
