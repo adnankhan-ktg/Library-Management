@@ -67,11 +67,11 @@ public class BookController {
           return responseMessage;
       }
 
-      @GetMapping("/get/assigned/returned/books/{studentId}")
-      public BookIssuedListsDto getIssuedBookRecord(@PathVariable("studentId") long studentId) throws Exception
+      @GetMapping("/get/assigned/returned/books/{studentId}/{offset}/{size}")
+      public BookIssuedListsDto getIssuedBookRecord(@PathVariable("studentId") long studentId, @PathVariable("offset") int offset, @PathVariable("size") int size) throws Exception
       {
           log.info("Inside BookController in getIssuedBookRecord()");
-          BookIssuedListsDto bookIssuedDtos = this.bookService.getIssuedBookRecordsAndReturnedBookRecords(studentId);
+          BookIssuedListsDto bookIssuedDtos = this.bookService.getIssuedBookRecordsAndReturnedBookRecords(studentId, offset, size);
           log.info("Leaving BookController in getIssuedBookRecord()");
           return bookIssuedDtos;
       }

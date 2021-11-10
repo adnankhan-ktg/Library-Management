@@ -15,6 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -238,11 +241,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId) throws Exception{
+    public BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId, int offset, int size) throws Exception{
             log.info("Inside BookServiceImpl in getIssuedBookRecord()");
 
+            //Make PageRequest Object
+             Pageable pageable = PageRequest.of(offset,size,Sort.by("bookId").ascending());
              //Fetch Issued book records for specific student
-             List<StudentBookIssued> listOfIssuedBook = this.studentBookIssuedRepository.findByStudentIdAndIsIssued(studentId,1);
+             List<StudentBookIssued> listOfIssuedBook = this.studentBookIssuedRepository.findByStudentIdAndIsIssued(studentId,1,pageable);
              List<StudentBookIssued> listOfReturnedBook = this.studentBookIssuedRepository.findByStudentIdAndIsReturned(studentId,1);
 
 
