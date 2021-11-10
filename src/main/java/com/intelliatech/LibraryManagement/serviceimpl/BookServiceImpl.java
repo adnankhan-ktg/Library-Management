@@ -279,4 +279,33 @@ public class BookServiceImpl implements BookService {
 
 
     }
+
+
+    @Override
+    public List<BookDto> getBooksBySubject(long subjectId) throws BusinessException {
+        log.info("Inside BookServiceImpl in getBooksBySubject()");
+        List<Book> listOfBook = this.bookRepository.getBooksBySubjectId(subjectId);
+        if(listOfBook == null)
+        {
+            log.info("Throw Exception");
+            throw new BusinessException(404,"Data not found");
+        }
+
+        //Create BookDto type of ArrayList
+        List<BookDto> listOfBookDto = new ArrayList<>();
+
+        //Transfer value listOfBook to listOfBookDto
+        for(Book book : listOfBook)
+        {
+            BookDto bookDto = new BookDto();
+            //Book Entity to BookDto
+            BeanUtils.copyProperties(book,bookDto);
+            //Add BookDto into the list
+            listOfBookDto.add(bookDto);
+        }
+
+
+        log.info("Leaving BookServiceImpl in getBooks()");
+        return listOfBookDto;
+    }
 }

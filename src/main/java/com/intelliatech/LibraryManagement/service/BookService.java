@@ -15,6 +15,7 @@ public interface BookService {
     ResponseMessage studentBookIssued(long studentId, long bookId)throws BusinessException;
     ResponseMessage studentBookReturned(long studentId, long bookId) throws Exception;
     BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId) throws Exception;
+    List<BookDto> getBooksBySubject(long subjectId) throws BusinessException;
 
 
 

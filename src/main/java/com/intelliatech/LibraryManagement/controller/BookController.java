@@ -70,13 +70,22 @@ public class BookController {
       @GetMapping("/get/assigned/returned/books/{studentId}")
       public BookIssuedListsDto getIssuedBookRecord(@PathVariable("studentId") long studentId) throws Exception
       {
-          log.info("Inside BookController in getIssuedBookRecord");
+          log.info("Inside BookController in getIssuedBookRecord()");
           BookIssuedListsDto bookIssuedDtos = this.bookService.getIssuedBookRecordsAndReturnedBookRecords(studentId);
-          log.info("Leaving BookController in getIssuedBookRecord");
+          log.info("Leaving BookController in getIssuedBookRecord()");
           return bookIssuedDtos;
       }
 
 
+      @GetMapping("/get/subjectId/{subjectId}")
+      public List<BookDto> getBooksBySubjectId(@PathVariable("subjectId") long subjectId) throws BusinessException
+      {
+          log.info("Inside BookController in getBooksBySubjectId()");
+          List<BookDto> listOfBookDto = this.bookService.getBooksBySubject(subjectId);
+          log.info("Leaving BookController in getBooksBySubjectId()");
+          return listOfBookDto;
+
+      }
 
 
 
