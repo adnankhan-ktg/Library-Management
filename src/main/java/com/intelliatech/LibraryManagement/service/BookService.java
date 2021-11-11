@@ -20,6 +20,7 @@ public interface BookService {
     BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId,int offset, int size) throws Exception;
     List<BookDto> getBooksBySubject(long subjectId) throws BusinessException;
     List<StudentBookIssuedDto> getStudentIssuedBooks(long studentId) throws Exception;
+    List<BookDto> getAvailableBooks() throws BusinessException;
 
 
 
