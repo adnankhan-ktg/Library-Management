@@ -88,6 +88,15 @@ public class BookController {
       }
 
 
+      @GetMapping("/get/all/available")
+      public List<BookDto> getAllAvailableBook() throws BusinessException
+      {
+          log.info("Inside BookController in getAllAvailableBook()");
+          List<BookDto> listOfBookDto = this.bookService.getAvailableBooks();
+          log.info("Leaving BookController in getAllAvailableBook()");
+          return listOfBookDto;
+
+      }
 
 
 
