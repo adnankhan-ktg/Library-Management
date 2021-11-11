@@ -1,10 +1,13 @@
 package com.intelliatech.LibraryManagement.controller;
 
 
+import com.intelliatech.LibraryManagement.dto.BookIssuedDto;
+import com.intelliatech.LibraryManagement.dto.StudentBookIssuedDto;
 import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.dto.StudentDtoNew;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ResponseMessage;
+import com.intelliatech.LibraryManagement.service.BookService;
 import com.intelliatech.LibraryManagement.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +23,8 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private BookService bookService;
 
     private static final Logger log = LoggerFactory.getLogger(StudentController.class);
 
@@ -61,6 +66,18 @@ public class StudentController {
         StudentDto studentDto = this.studentService.getStudent(studentId);
         log.info("Leaving StudentController in getStudent()");
         return studentDto;
+    }
+
+
+    @GetMapping("/get/all/issued/books/{studentId}")
+    public List<StudentBookIssuedDto> getIssuedBooksByStudentId(@PathVariable("studentId") long studentId) throws Exception
+    {
+        log.info("Inside StudentController in getIssuedBooksByStudentId()");
+        List<StudentBookIssuedDto> listOfIssuedBook = this.bookService.getStudentIssuedBooks(studentId);
+        log.info("Leaving StudentController in getIssuedBooksByStudentId()");
+        return listOfIssuedBook;
+
+
     }
 
 }

@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -312,5 +313,37 @@ public class BookServiceImpl implements BookService {
 
         log.info("Leaving BookServiceImpl in getBooks()");
         return listOfBookDto;
+    }
+
+    @Override
+    public List<StudentBookIssuedDto> getStudentIssuedBooks(long studentId)throws Exception {
+        log.info("Inside BookServiceImpl in getStudentIssuedBooks()");
+        //Check Student Exists or not with given StudentId
+        if(this.studentRepository.checkStudent(studentId) == 0){
+            log.info("Student Not found Exception throw");
+            throw new BusinessException(404,"Student Not found with Student Id");
+        }
+        //Database Call
+        //Get List of Issued Book with studentId and BookId
+        List<StudentBookIssued> listOfIssuedBook = this.studentBookIssuedRepository.findByStudentIdAndIsIssued(studentId,1);
+        //Check Student has at least  one book or not
+        if(listOfIssuedBook.size() == 0)
+        {
+            log.info("Throw Exception");
+            throw new BusinessException(404,"Data not found");
+        }
+        //Create StudentBookIssuedDto type of list
+        List<StudentBookIssuedDto> listOfIssuedBookDto = new ArrayList<>();
+        //Write code for change list of entity to dto
+        for(StudentBookIssued i : listOfIssuedBook){
+            //Create studentBookIssuedDto Object
+            StudentBookIssuedDto studentBookIssuedDto = new StudentBookIssuedDto();
+            //Copy value entity to dto
+            BeanUtils.copyProperties(i,studentBookIssuedDto);
+            //add value in the list
+            listOfIssuedBookDto.add(studentBookIssuedDto);
+        }
+        log.info("Leaving BookServiceImpl in getStudentIssuedBooks()");
+        return listOfIssuedBookDto;
     }
 }

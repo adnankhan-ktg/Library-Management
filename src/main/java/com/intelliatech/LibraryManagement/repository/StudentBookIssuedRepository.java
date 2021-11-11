@@ -1,5 +1,7 @@
 package com.intelliatech.LibraryManagement.repository;
 
+import com.intelliatech.LibraryManagement.dto.BookIssuedDto;
+import com.intelliatech.LibraryManagement.dto.StudentBookIssuedDto;
 import com.intelliatech.LibraryManagement.model.StudentBookIssued;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +16,7 @@ public interface StudentBookIssuedRepository extends JpaRepository<StudentBookIs
     List<StudentBookIssued> findByStudentIdAndIsIssued(long studentId, int isIssued, Pageable pageable);
 //    Page<StudentBookIssued> findByStudentIdAndIsIssued(long studentId, int isIssued, Pageable pageable);
     List<StudentBookIssued> findByStudentIdAndIsReturned(long studentId,int isReturned);
+    List<StudentBookIssued> findByStudentIdAndIsIssued(long studentId, int isIssued)throws Exception;
 
 
 }

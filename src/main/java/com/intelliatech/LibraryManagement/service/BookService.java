@@ -1,7 +1,9 @@
 package com.intelliatech.LibraryManagement.service;
 
 import com.intelliatech.LibraryManagement.dto.BookDto;
+import com.intelliatech.LibraryManagement.dto.BookIssuedDto;
 import com.intelliatech.LibraryManagement.dto.BookIssuedListsDto;
+import com.intelliatech.LibraryManagement.dto.StudentBookIssuedDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ResponseMessage;
 
@@ -17,6 +19,7 @@ public interface BookService {
 //    BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId) throws Exception;
     BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId,int offset, int size) throws Exception;
     List<BookDto> getBooksBySubject(long subjectId) throws BusinessException;
+    List<StudentBookIssuedDto> getStudentIssuedBooks(long studentId) throws Exception;
 
 
 
