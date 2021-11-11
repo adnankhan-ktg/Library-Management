@@ -1,9 +1,11 @@
 package com.intelliatech.LibraryManagement.controller;
 
+import com.intelliatech.LibraryManagement.dto.CaptchaDto;
 import com.intelliatech.LibraryManagement.dto.LoginDto;
 import com.intelliatech.LibraryManagement.dto.TokenDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ResponseMessage;
+import com.intelliatech.LibraryManagement.service.CaptchaService;
 import com.intelliatech.LibraryManagement.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ public class UserLoginController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CaptchaService captchaService;
 
     @GetMapping("/login")
     public ResponseMessage login(@RequestBody LoginDto loginDto) throws BusinessException
@@ -33,6 +37,13 @@ public class UserLoginController {
     public TokenDto loginAndGenerateToken(@RequestBody LoginDto loginDto) throws BusinessException
     {
         log.info("Inside UserLoginController in loginAndGenerateToken()");
+        //Check Captcha validation
+        //Call Captcha Service
+        boolean status = this.captchaService.validateCaptcha(new CaptchaDto(loginDto.getCaptchaCodeId(),loginDto.getCaptchaCode()));
+        if(status == false)
+        {
+            throw new BusinessException(406,"Captcha not acceptable");
+        }
         TokenDto tokenDto = this.userService.generateToken(loginDto);
         log.info("Leaving UserLoginController in loginAndGenerateToken()");
         return tokenDto;
