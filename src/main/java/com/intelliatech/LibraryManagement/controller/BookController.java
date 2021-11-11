@@ -98,6 +98,14 @@ public class BookController {
 
       }
 
+      @GetMapping("/get/all/available/subject/{subjectId}")
+       public List<BookDto> getAllAvailableBookBySubjectId(@PathVariable("subjectId") long subjectId) throws BusinessException
+       {
+           log.info("Inside BookController in getAllAvailableBookBySubjectId()");
+           List<BookDto> listOfBookDto = this.bookService.getAvailableBooksBySubjectId(subjectId);
+           log.info("Leaving BookController in getAllAvailableBookBySubjectId()");
+           return listOfBookDto;
+       }
 
 
 
