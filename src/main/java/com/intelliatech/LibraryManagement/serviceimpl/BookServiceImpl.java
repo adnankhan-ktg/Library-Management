@@ -9,6 +9,7 @@ import com.intelliatech.LibraryManagement.model.StudentBookIssued;
 import com.intelliatech.LibraryManagement.repository.BookRepository;
 import com.intelliatech.LibraryManagement.repository.StudentBookIssuedRepository;
 import com.intelliatech.LibraryManagement.repository.StudentRepository;
+import com.intelliatech.LibraryManagement.repository.SubjectRepository;
 import com.intelliatech.LibraryManagement.service.BookService;
 import com.intelliatech.LibraryManagement.service.helper.MailService;
 import org.slf4j.Logger;
@@ -35,6 +36,8 @@ public class BookServiceImpl implements BookService {
     private StudentRepository studentRepository;
     @Autowired
     private StudentBookIssuedRepository studentBookIssuedRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     private MailService mailService;
     @Override
@@ -290,6 +293,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> getBooksBySubject(long subjectId) throws BusinessException {
         log.info("Inside BookServiceImpl in getBooksBySubject()");
+        if(this.subjectRepository.checkSubject(subjectId) == 0)
+        {
+            log.info("Subject Not found Exception");
+            throw new BusinessException(404,"Subject Not found");
+        }
+
         List<Book> listOfBook = this.bookRepository.getBooksBySubjectId(subjectId);
         if(listOfBook == null)
         {
@@ -373,5 +382,37 @@ public class BookServiceImpl implements BookService {
         }
         log.info("Leaving BookServiceImpl in getAvailableBooks()");
         return listOfBookDto;
+    }
+
+    @Override
+    public List<BookDto> getAvailableBooksBySubjectId(long subjectId) throws BusinessException {
+        log.info("Inside BookServiceImpl in getAvailableBooksBySubjectId()");
+        if(this.subjectRepository.checkSubject(subjectId) == 0)
+        {
+            log.info("Subject Not Found Exception");
+            throw new BusinessException(404,"Subject Not Found");
+        }
+        List<Book> listOfBook = this.bookRepository.findByIsAvailableAndSubjectId(1,subjectId);
+        //Check list has at least one book or not
+        if(listOfBook.size() == 0)
+        {
+            throw new BusinessException(404,"No Data Found");
+        }
+
+        //Create BookDto type of List
+        List<BookDto> listOfBookDto = new ArrayList<>();
+        //Copy list of Book to BookDto
+        for(Book book : listOfBook)
+        {
+            //Create Book type of Object
+            BookDto bookDto = new BookDto();
+            //Copy properties Book Entity to Book Dto
+            BeanUtils.copyProperties(book,bookDto);
+            //Add BookDto into the list
+            listOfBookDto.add(bookDto);
+        }
+        log.info("Leaving BookServiceImpl in getAvailableBooksBySubjectId()");
+        return listOfBookDto;
+
     }
 }
