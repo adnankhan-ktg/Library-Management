@@ -9,6 +9,7 @@ import com.intelliatech.LibraryManagement.model.StudentBookIssued;
 import com.intelliatech.LibraryManagement.repository.BookRepository;
 import com.intelliatech.LibraryManagement.repository.StudentBookIssuedRepository;
 import com.intelliatech.LibraryManagement.repository.StudentRepository;
+import com.intelliatech.LibraryManagement.repository.SubjectRepository;
 import com.intelliatech.LibraryManagement.service.BookService;
 import com.intelliatech.LibraryManagement.service.helper.MailService;
 import org.slf4j.Logger;
@@ -35,6 +36,8 @@ public class BookServiceImpl implements BookService {
     private StudentRepository studentRepository;
     @Autowired
     private StudentBookIssuedRepository studentBookIssuedRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     private MailService mailService;
     @Override
@@ -290,6 +293,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> getBooksBySubject(long subjectId) throws BusinessException {
         log.info("Inside BookServiceImpl in getBooksBySubject()");
+        if(this.subjectRepository.checkSubject(subjectId) == 0)
+        {
+            log.info("Subject Not found Exception");
+            throw new BusinessException(404,"Subject Not found");
+        }
+
         List<Book> listOfBook = this.bookRepository.getBooksBySubjectId(subjectId);
         if(listOfBook == null)
         {
