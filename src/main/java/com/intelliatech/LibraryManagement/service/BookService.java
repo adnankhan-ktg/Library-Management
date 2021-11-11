@@ -16,12 +16,14 @@ public interface BookService {
     BookDto getBook(long id) throws BusinessException;
     ResponseMessage studentBookIssued(long studentId, long bookId)throws BusinessException;
     ResponseMessage studentBookReturned(long studentId, long bookId) throws Exception;
-//    BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId) throws Exception;
     BookIssuedListsDto getIssuedBookRecordsAndReturnedBookRecords(long studentId,int offset, int size) throws Exception;
     List<BookDto> getBooksBySubject(long subjectId) throws BusinessException;
     List<StudentBookIssuedDto> getStudentIssuedBooks(long studentId) throws Exception;
     List<BookDto> getAvailableBooks() throws BusinessException;
+    List<BookDto> getUnAvailableBooks() throws BusinessException;
     List<BookDto> getAvailableBooksBySubjectId(long subjectId) throws BusinessException;
+    List<BookDto> getUnAvailableBooksBySubjectId(long subjectId) throws BusinessException;
+
 
 
 

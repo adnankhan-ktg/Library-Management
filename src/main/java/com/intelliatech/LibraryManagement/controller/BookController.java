@@ -107,6 +107,26 @@ public class BookController {
            return listOfBookDto;
        }
 
+    @GetMapping("/get/all/unavailable")
+    public List<BookDto> getAllUnAvailableBook() throws BusinessException
+    {
+        log.info("Inside BookController in getAllAvailableBook()");
+        List<BookDto> listOfBookDto = this.bookService.getUnAvailableBooks();
+        log.info("Leaving BookController in getAllAvailableBook()");
+        return listOfBookDto;
+
+    }
+
+    @GetMapping("/get/all/unavailable/subject/{subjectId}")
+    public List<BookDto> getAllUnAvailableBookBySubjectId(@PathVariable("subjectId") long subjectId) throws BusinessException
+    {
+        log.info("Inside BookController in getAllAvailableBookBySubjectId()");
+        List<BookDto> listOfBookDto = this.bookService.getUnAvailableBooksBySubjectId(subjectId);
+        log.info("Leaving BookController in getAllAvailableBookBySubjectId()");
+        return listOfBookDto;
+    }
+
+
 
 
 }
