@@ -1,6 +1,7 @@
 package com.intelliatech.LibraryManagement.controller;
 
 
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.BookIssuedDto;
 import com.intelliatech.LibraryManagement.dto.StudentBookIssuedDto;
 import com.intelliatech.LibraryManagement.dto.StudentDto;
@@ -18,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping(Constants.STUDENT)
 public class StudentController {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ResponseMessage;
@@ -52,7 +53,7 @@ public class BookServiceImpl implements BookService {
 
          //Set number of authors in the Book entity
         book_1.setBookAuthors(bookDto.getBookAuthors());
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(bookDto.getBookPublishedDate());
+        Date date1=new SimpleDateFormat(Constants.DATE_FORMAT_DD_MM_YYYY).parse(bookDto.getBookPublishedDate());
         book_1.setBookPublishedDate(date1);
         book_1.setIsAvailable(1);
         book_1.setIsActive(1);
@@ -62,11 +63,11 @@ public class BookServiceImpl implements BookService {
         if(book_2 == null)
         {
             log.info("throw exception");
-            throw new BusinessException(400,"Bad Request");
+            throw new BusinessException(400, Constants.BAD_REQUEST);
         }else{
             log.info("Book Successfully created");
             log.info("Leaving BookServiceImpl in createBook()");
-            return new ResponseMessage("Book Successfully created",200);
+            return new ResponseMessage(Constants.BOOK_SUCCESSFULLY_CREATED,200);
         }
 
     }
@@ -78,7 +79,7 @@ public class BookServiceImpl implements BookService {
         if(listOfBook == null)
         {
             log.info("Throw Exception");
-            throw new BusinessException(404,"Data not found");
+            throw new BusinessException(404, Constants.DATA_NOT_FOUND);
         }
 
         //Create BookDto type of ArrayList
@@ -111,12 +112,12 @@ public class BookServiceImpl implements BookService {
         //Check student exists or not
         if(student == null)
         {
-            throw new BusinessException(404,"Student not found");
+            throw new BusinessException(404, Constants.STUDENT_NOT_FOUND);
         }
         //Check book exists or not
         if(book == null)
         {
-            throw new BusinessException(404,"Book not found");
+            throw new BusinessException(404, Constants.BOOK_NOT_FOUND);
         }
 
         //check student number of book issued(out of limit or not)
@@ -127,7 +128,7 @@ public class BookServiceImpl implements BookService {
         //Check book status is it available or active or not
         else if(book.getIsAvailable() == 0 || book.getIsActive() == 0)
         {
-            throw new BusinessException(204,"Book already issued");
+            throw new BusinessException(204, Constants.BOOK_ALREADY_ISSUED);
         }else{
             //Create StudentBookIssued type of 'Object'
             StudentBookIssued studentBookIssued =  new StudentBookIssued();
@@ -154,6 +155,7 @@ public class BookServiceImpl implements BookService {
             //database call for student
             this.studentRepository.save(student);
             //database call for book
+
             this.bookRepository.save(book);
 
             //database call for StudentBookIssued type of table...
@@ -161,11 +163,11 @@ public class BookServiceImpl implements BookService {
             if(studentBookIssued1 == null)
             {
                 log.info("Throw Exception");
-                throw new BusinessException(400,"Bad Request");
+                throw new BusinessException(400,Constants.BAD_REQUEST);
             }else{
                 log.info("Leaving BookServiceImpl studentBookIssued()");
 //                mailService.sendMail(new MailRequestDto(student.getEmail(),student.getFirstName()+" "+student.getLastName()+" Book "+book.getBookName()+" Issued to you","Book Issued"));
-                return new ResponseMessage("The record successfully added",200);
+                return new ResponseMessage(Constants.BOOK_SUCCESSFULLY_ISSUED,200);
             }
 
 
@@ -181,11 +183,11 @@ public class BookServiceImpl implements BookService {
         StudentBookIssued studentBookIssued = this.studentBookIssuedRepository.findByStudentIdAndBookIdAndIsIssued(studentId,bookId,1);
         if(studentBookIssued == null)
         {
-            throw new BusinessException(404,"Record Not Found");
+            throw new BusinessException(404,Constants.RECORD_NOT_FOUND);
         }
         if(studentBookIssued.getIsIssued() != 1 || studentBookIssued.getIsReturned() != 0)
         {
-            throw new BusinessException(420,"Book not Assigned");
+            throw new BusinessException(420,Constants.BOOK_NOT_ISSUED);
         }
 
         //Get Book Issued Date from studentBookIssued
@@ -224,7 +226,7 @@ public class BookServiceImpl implements BookService {
 
 
 //        mailService.sendMail(new MailRequestDto(student.getEmail(),student.getFirstName()+" "+student.getLastName()+" Book "+book.getBookName()+" deallocate to you","Book Issued"));
-     return new ResponseMessage("Successfully Book Returned",200);
+     return new ResponseMessage(Constants.BOOK_RETURNED_SUCCESSFULLY,200);
 
 
     }
@@ -296,14 +298,14 @@ public class BookServiceImpl implements BookService {
         if(this.subjectRepository.checkSubject(subjectId) == 0)
         {
             log.info("Subject Not found Exception");
-            throw new BusinessException(404,"Subject Not found");
+            throw new BusinessException(404,Constants.SUBJECT_NOT_FOUND);
         }
 
         List<Book> listOfBook = this.bookRepository.getBooksBySubjectId(subjectId);
         if(listOfBook == null)
         {
             log.info("Throw Exception");
-            throw new BusinessException(404,"Data not found");
+            throw new BusinessException(404,Constants.DATA_NOT_FOUND);
         }
 
         //Create BookDto type of ArrayList
@@ -339,7 +341,7 @@ public class BookServiceImpl implements BookService {
         if(listOfIssuedBook.size() == 0)
         {
             log.info("Throw Exception");
-            throw new BusinessException(404,"Data not found");
+            throw new BusinessException(404,Constants.DATA_NOT_FOUND);
         }
         //Create StudentBookIssuedDto type of list
         List<StudentBookIssuedDto> listOfIssuedBookDto = new ArrayList<>();
@@ -365,7 +367,7 @@ public class BookServiceImpl implements BookService {
         //Check list has at least one book or not
         if(listOfBook.size() == 0)
         {
-            throw new BusinessException(404,"No Data Found");
+            throw new BusinessException(404,Constants.DATA_NOT_FOUND);
         }
 
         //Create BookDto type of List
@@ -390,13 +392,13 @@ public class BookServiceImpl implements BookService {
         if(this.subjectRepository.checkSubject(subjectId) == 0)
         {
             log.info("Subject Not Found Exception");
-            throw new BusinessException(404,"Subject Not Found");
+            throw new BusinessException(404,Constants.SUBJECT_NOT_FOUND);
         }
         List<Book> listOfBook = this.bookRepository.findByIsAvailableAndSubjectId(1,subjectId);
         //Check list has at least one book or not
         if(listOfBook.size() == 0)
         {
-            throw new BusinessException(404,"No Data Found");
+            throw new BusinessException(404,Constants.DATA_NOT_FOUND);
         }
 
         //Create BookDto type of List
@@ -423,7 +425,7 @@ public class BookServiceImpl implements BookService {
         //Check list has at least one book or not
         if(listOfBook.size() == 0)
         {
-            throw new BusinessException(404,"No Data Found");
+            throw new BusinessException(404,Constants.DATA_NOT_FOUND);
         }
 
         //Create BookDto type of List
@@ -448,13 +450,13 @@ public class BookServiceImpl implements BookService {
         if(this.subjectRepository.checkSubject(subjectId) == 0)
         {
             log.info("Subject Not Found Exception");
-            throw new BusinessException(404,"Subject Not Found");
+            throw new BusinessException(404,Constants.SUBJECT_NOT_FOUND);
         }
         List<Book> listOfBook = this.bookRepository.findByIsAvailableAndSubjectId(0,subjectId);
         //Check list has at least one book or not
         if(listOfBook.size() == 0)
         {
-            throw new BusinessException(404,"No Data Found");
+            throw new BusinessException(404, Constants.DATA_NOT_FOUND);
         }
 
         //Create BookDto type of List
@@ -477,7 +479,7 @@ public class BookServiceImpl implements BookService {
     public List<BookIssuedDto> getIssuedBookByDate(String date)throws Exception {
         log.info("Inside BookServiceImpl in getIssuedBookByDate()");
         //Convert String date into Date date format
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        Date date1=new SimpleDateFormat(Constants.DATE_FORMAT_DD_MM_YYYY).parse(date);
         //DataBase Call
         //Get all issued date by given date
         List<StudentBookIssued> listOfIssuedBook = this.studentBookIssuedRepository.findByBookIssuedDate(date1);
@@ -485,7 +487,7 @@ public class BookServiceImpl implements BookService {
         if(listOfIssuedBook.size() == 0)
         {
             log.info("No data found Exception");
-            throw new BusinessException(404,"No Data found");
+            throw new BusinessException(404,Constants.DATA_NOT_FOUND);
         }
         //Create empty list type of BookIssuedDto
         List<BookIssuedDto> listOfIssueBookDto = new ArrayList<>();

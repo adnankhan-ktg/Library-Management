@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.controller;
 
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.CaptchaDto;
 import com.intelliatech.LibraryManagement.service.CaptchaService;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/captcha")
+@RequestMapping(Constants.CAPTCHA)
 public class CaptchaController {
 
     private static final Logger log = LoggerFactory.getLogger(CaptchaController.class);

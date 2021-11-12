@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.controller;
 
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ResponseMessage;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping(Constants.BOOK)
 public class BookController {
     private static final Logger log = LoggerFactory.getLogger(BookController.class);
      @Autowired
