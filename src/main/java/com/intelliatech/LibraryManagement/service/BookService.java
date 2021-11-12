@@ -23,6 +23,7 @@ public interface BookService {
     List<BookDto> getUnAvailableBooks() throws BusinessException;
     List<BookDto> getAvailableBooksBySubjectId(long subjectId) throws BusinessException;
     List<BookDto> getUnAvailableBooksBySubjectId(long subjectId) throws BusinessException;
+    List<BookIssuedDto> getIssuedBookByDate(String date) throws Exception;
 
 
 

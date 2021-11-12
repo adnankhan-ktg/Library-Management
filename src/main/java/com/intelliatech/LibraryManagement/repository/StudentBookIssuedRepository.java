@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -17,6 +18,7 @@ public interface StudentBookIssuedRepository extends JpaRepository<StudentBookIs
 //    Page<StudentBookIssued> findByStudentIdAndIsIssued(long studentId, int isIssued, Pageable pageable);
     List<StudentBookIssued> findByStudentIdAndIsReturned(long studentId,int isReturned);
     List<StudentBookIssued> findByStudentIdAndIsIssued(long studentId, int isIssued)throws Exception;
+    List<StudentBookIssued> findByBookIssuedDate(Date date);
 
 
 }

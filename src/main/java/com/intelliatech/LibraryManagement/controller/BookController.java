@@ -126,6 +126,14 @@ public class BookController {
         return listOfBookDto;
     }
 
+    @GetMapping("/get/all/issued/by/date")
+    public List<BookIssuedDto> getIssuedBooksByDate(@RequestBody DateDto dateDto) throws Exception
+    {
+        log.info("Inside BookController in getIssuedBooksByDate()");
+        List<BookIssuedDto> listOfIssuedBook = this.bookService.getIssuedBookByDate(dateDto.getDate());
+        log.info("Leaving BookController in getIssuedBooksByDate()");
+        return listOfIssuedBook;
+    }
 
 
 

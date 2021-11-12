@@ -473,4 +473,35 @@ public class BookServiceImpl implements BookService {
         return listOfBookDto;
 
     }
+
+    public List<BookIssuedDto> getIssuedBookByDate(String date)throws Exception {
+        log.info("Inside BookServiceImpl in getIssuedBookByDate()");
+        //Convert String date into Date date format
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        //DataBase Call
+        //Get all issued date by given date
+        List<StudentBookIssued> listOfIssuedBook = this.studentBookIssuedRepository.findByBookIssuedDate(date1);
+        //Check list has at least one book or not
+        if(listOfIssuedBook.size() == 0)
+        {
+            log.info("No data found Exception");
+            throw new BusinessException(404,"No Data found");
+        }
+        //Create empty list type of BookIssuedDto
+        List<BookIssuedDto> listOfIssueBookDto = new ArrayList<>();
+        //For Convert List Of StudentBookIssued to list of BookIssuedDto
+        for(StudentBookIssued i : listOfIssuedBook)
+        {
+            //Create BookIssuedDto 'Object'
+            BookIssuedDto bookIssuedDto = new BookIssuedDto();
+            //Copy StudentBookIssued Object value in the BookIssuedDto Object
+            BeanUtils.copyProperties(i,bookIssuedDto);
+            //Add value in the list
+            listOfIssueBookDto.add(bookIssuedDto);
+        }
+        log.info("Leaving BookServiceImpl in getIssuedBookByDate()");
+        return listOfIssueBookDto;
+    }
+
+
 }
