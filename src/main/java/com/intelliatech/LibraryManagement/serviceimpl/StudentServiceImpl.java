@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.MailRequestDto;
 import com.intelliatech.LibraryManagement.dto.StudentDto;
 import com.intelliatech.LibraryManagement.dto.StudentDtoNew;
@@ -44,12 +45,12 @@ public class StudentServiceImpl implements StudentService {
         Student student_1 = this.studentRepository.findByEmailOrMobileNumber(studentDto.getEmail(),studentDto.getMobileNumber());
         if(student_1 != null)
         {
-            throw new BusinessException(208,"Student already exists");
+            throw new BusinessException(208, Constants.STUDENT_ALREADY_EXISTS);
         }
         //Student Entity Object
          Student student_2 = new Student();
 
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(studentDto.getDateOfBirth());
+        Date date1=new SimpleDateFormat(Constants.DATE_FORMAT_DD_MM_YYYY).parse(studentDto.getDateOfBirth());
         student_2.setDateOfBirth(date1);
 
         //StudentDto to Student Entity
@@ -70,10 +71,10 @@ public class StudentServiceImpl implements StudentService {
             mailService.sendMail(new MailRequestDto(student_3.getEmail(),student_3.getFirstName()+" "+student_3.getLastName()+" Your Library account successfully created","Account Registration"));
 
             log.info("leaving createUser() in StudentServiceImpl");
-            return new ResponseMessage("Student successfully created",200);
+            return new ResponseMessage(Constants.STUDENT_SUCCESSFULLY_CREATED,200);
         }else{
             log.info("throw exception");
-            throw new BusinessException(400,"Bad Request");
+            throw new BusinessException(400,Constants.BAD_REQUEST);
         }
     }
 
@@ -130,12 +131,12 @@ public class StudentServiceImpl implements StudentService {
         Student student_1 = this.studentRepository.findByEmailOrMobileNumber(studentDto.getEmail(),studentDto.getMobileNumber());
         if(student_1 != null)
         {
-            throw new BusinessException(208,"Student already exists");
+            throw new BusinessException(208,Constants.STUDENT_ALREADY_EXISTS);
         }
         //Student Entity Object
         Student student_2 = new Student();
 
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(studentDto.getDateOfBirth());
+        Date date1=new SimpleDateFormat(Constants.DATE_FORMAT_DD_MM_YYYY).parse(studentDto.getDateOfBirth());
         student_2.setDateOfBirth(date1);
 
         //StudentDto to Student Entity
@@ -157,10 +158,10 @@ public class StudentServiceImpl implements StudentService {
             mailService.sendMail(new MailRequestDto(student_3.getEmail(),student_3.getFirstName()+" "+student_3.getLastName()+" Your Library account successfully created","Account Registration"));
 
             log.info("leaving createUser() in StudentServiceImpl");
-            return new ResponseMessage("Student successfully created",200);
+            return new ResponseMessage(Constants.STUDENT_SUCCESSFULLY_CREATED,200);
         }else{
             log.info("throw exception");
-            throw new BusinessException(400,"Bad Request");
+            throw new BusinessException(400,Constants.BAD_REQUEST);
         }
     }
 }

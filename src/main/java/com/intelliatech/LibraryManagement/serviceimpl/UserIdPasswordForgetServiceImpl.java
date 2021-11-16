@@ -1,4 +1,5 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.controller.UserIdPasswordForgetController;
 import com.intelliatech.LibraryManagement.dto.MailRequestDto;
 import com.intelliatech.LibraryManagement.dto.UserIdPasswordForgetDto;
@@ -57,7 +58,7 @@ public class UserIdPasswordForgetServiceImpl implements UserIdPasswordForgetServ
         }else{
             log.info("User Not found");
             log.info("Leaving UserIdPasswordForgetServiceImpl in getPasswordForgetOtp()");
-             throw new BusinessException(404,"UserId not found");
+             throw new BusinessException(404, Constants.USER_NOT_FOUND);
 //            return new ResponseMessage("UserId not found",404);
         }
 
@@ -79,10 +80,10 @@ public class UserIdPasswordForgetServiceImpl implements UserIdPasswordForgetServ
                 otpService.clearOTP(userIdPasswordForgetDto.getUserId());
                 return new ResponseMessage(user.getDateOfBirth()+user.getGender(),200);
             }
-            return new ResponseMessage("otp doesn't match",406);
+            return new ResponseMessage(Constants.OTP_NOT_MATCH,406);
 
         }else{
-            throw new BusinessException(404,"User Not Found");
+            throw new BusinessException(404,Constants.USER_NOT_FOUND);
         }
 
     }
@@ -99,19 +100,19 @@ public class UserIdPasswordForgetServiceImpl implements UserIdPasswordForgetServ
                 User user1 = this.userRepository.save(user);
                 if(user1 != null){
                     log.info("Leaving UseridPasswordForgetServiceImpl in updatePassword");
-                    return new ResponseMessage("Password Update Successfully",200);
+                    return new ResponseMessage(Constants.PASSWORD_SUCCESSFULLY_MODIFIED,200);
                 }else{
                     log.info("Leaving UseridPasswordForgetServiceImpl in updatePassword");
-                    throw  new BusinessException(304,"Password Not modified");
+                    throw  new BusinessException(304,Constants.PASSWORD_NOT_MODIFIED);
                 }
 
 
             }else{
-                throw new BusinessException(401,"Key doesn't match");
+                throw new BusinessException(401,Constants.KEY_NOT_MATCH);
             }
 
         }else{
-            throw new BusinessException(404,"User Not Found");
+            throw new BusinessException(404,Constants.USER_NOT_FOUND);
         }
 
 

@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.SubjectDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ResponseMessage;
@@ -31,7 +32,7 @@ public class SubjectServiceImpl implements SubjectService {
         if(subject_1 != null)
         {
             log.info("throw exception");
-            throw new BusinessException(208,"Subject Already Exists");
+            throw new BusinessException(208,Constants.SUBJECT_ALREADY_EXISTS);
         }
         //Create Subject Entity type of Object
         Subject subject_2 = new Subject();
@@ -45,7 +46,7 @@ public class SubjectServiceImpl implements SubjectService {
             throw new BusinessException(400,"Bad Request");
         }else{
             log.info("Subject Successfully created");
-            return new ResponseMessage("Subject successfully created",200);
+            return new ResponseMessage(Constants.SUBJECT_SUCCESSFULLY_CREATED,200);
         }
 
 
@@ -82,7 +83,7 @@ public class SubjectServiceImpl implements SubjectService {
         if(subject == null)
         {
             log.info("throw exception");
-            throw new BusinessException(404,"subject not found");
+            throw new BusinessException(404, Constants.SUBJECT_NOT_FOUND);
         }
         //SubjectDto type of Object create
         SubjectDto subjectDto = new SubjectDto();

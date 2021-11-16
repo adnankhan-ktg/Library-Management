@@ -2,6 +2,7 @@ package com.intelliatech.LibraryManagement.serviceimpl;
 
 import com.intelliatech.LibraryManagement.config.JwtTokenUtil;
 import com.intelliatech.LibraryManagement.config.JwtUserDetailsService;
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ResponseMessage;
@@ -45,12 +46,12 @@ public class UserServiceImpl implements UserService {
           User user_2 = this.userRepository.findByUsernameOrEmailOrMobileNumber(userDto.getUsername(),userDto.getEmail(),userDto.getMobileNumber());
           if(user_2 != null)
           {
-              throw new BusinessException(208,"User already exists");
+              throw new BusinessException(208, Constants.USER_NOT_FOUND);
           }
           //Compare new password and confirm password
         if((userDto.getNewPassword().equals(userDto.getConfirmPassword())) == false)
            {
-               throw new BusinessException(406,"password doesn't match");
+               throw new BusinessException(406,Constants.PASSWORD_NOT_MATCH);
            }
         //UserEntity Object
         User user = new User();
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userDto,user);
         user.setAddress(userDto.getAddress());
         user.setPassword(userDto.getConfirmPassword());
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(userDto.getDateOfBirth());
+        Date date1=new SimpleDateFormat(Constants.DATE_FORMAT_DD_MM_YYYY).parse(userDto.getDateOfBirth());
         user.setDateOfBirth(date1);
         user.setRegistrationDate(new Date());
         user.setIsActive(1);
@@ -71,10 +72,10 @@ public class UserServiceImpl implements UserService {
             //Send account signup notification to the user
             mailService.sendMail(new MailRequestDto(user_1.getEmail(),user_1.getFirstName()+" "+user_1.getLastName()+" Your library User account successfully created","Account Registration"));
             log.info("leaving createUser() in UserServiceImpl");
-           return new ResponseMessage("user successfully created",200);
+           return new ResponseMessage(Constants.USER_SUCCESSFULLY_CREATED,200);
         }else{
             log.info("throw exception");
-           throw new BusinessException(400,"Bad Request");
+           throw new BusinessException(400,Constants.BAD_REQUEST);
         }
 
     }
@@ -88,14 +89,14 @@ public class UserServiceImpl implements UserService {
             if(loginDto.getPassword().equals(user_1.getPassword()))
             {
                 log.info("leaving UserServiceImpl in login()");
-                return new ResponseMessage("User login successfully",200);
+                return new ResponseMessage(Constants.USER_SUCCESSFULLY_LOGIN,200);
             }else{
                 log.info("Throw exception username exists but password not match");
-                throw new BusinessException(406,"Password not acceptable corresponding to username");
+                throw new BusinessException(406,Constants.PASSWORD_NOT_MATCH);
             }
         }else{
             log.info("Throw exception username doesn't exists");
-            throw new BusinessException(404,"Username doesn't exists");
+            throw new BusinessException(404,Constants.USER_NOT_FOUND);
         }
     }
 
@@ -130,7 +131,7 @@ public class UserServiceImpl implements UserService {
 
         if(user_1 == null)
         {
-            throw new BusinessException(404,"Desired User is not found");
+            throw new BusinessException(404,Constants.USER_NOT_FOUND);
         }else{
             //Create UserDto type of Object
             UserDto userDto = new UserDto();
@@ -161,12 +162,12 @@ public class UserServiceImpl implements UserService {
                 return new TokenDto(token);
             }{
                 log.error("Throw Password doesn't match Exception");
-                throw new BusinessException(406,"Password not acceptable corresponding to username");
+                throw new BusinessException(406,Constants.PASSWORD_NOT_MATCH);
         }
         }
         else{
             log.error("Throw User not found Exception");
-            throw new BusinessException(404,"User Not Found");
+            throw new BusinessException(404,Constants.USER_NOT_FOUND);
         }
 
     }

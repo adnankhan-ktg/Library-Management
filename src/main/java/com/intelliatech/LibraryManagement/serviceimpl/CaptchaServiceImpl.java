@@ -1,5 +1,6 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
+import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.CaptchaDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.model.Captcha;
@@ -25,7 +26,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     public CaptchaDto getCaptcha() throws BusinessException {
         log.info("Inside CaptchaServiceImpl in getCaptcha()");
         //Captcha pattern
-        String pattern = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String pattern = Constants.CAPTCHA_PATTERN_STRING;
         //Create Random Class Object
         Random rnd = new Random();
         //Create StringBuilder Object

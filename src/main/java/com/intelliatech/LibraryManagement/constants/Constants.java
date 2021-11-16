@@ -21,6 +21,19 @@ public class Constants {
       public static final String BOOK_NOT_ISSUED = "Book Not Issued";
       public static final String BOOK_RETURNED_SUCCESSFULLY = "Book Returned Successfully";
       public static final String SUBJECT_NOT_FOUND = "Subject Not Found";
+      public static final String PASSWORD_NOT_MATCH = "Password Doesn't Match";
+      public static final String USER_SUCCESSFULLY_CREATED = "User Successfully Created";
+      public static final String USER_SUCCESSFULLY_LOGIN = "User Successfully Login";
+      public static final String OTP_NOT_MATCH = "OTP Doesn't Match";
+      public static final String PASSWORD_NOT_MODIFIED = "Password Doesn't modify";
+      public static final String KEY_NOT_MATCH = "Key Doesn't Match";
+      public static final String PASSWORD_SUCCESSFULLY_MODIFIED = "Password Modified Successfully";
+      public static final String SUBJECT_SUCCESSFULLY_CREATED = "Subject Successfully Created";
+      public static final String SUBJECT_ALREADY_EXISTS = "Subject Already Exists";
+      public static final String STUDENT_ALREADY_EXISTS = "Student Already Exists";
+      public static final String STUDENT_SUCCESSFULLY_CREATED = "Student Successfully Created";
+      public static final String CAPTCHA_PATTERN_STRING = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
 
 
 
