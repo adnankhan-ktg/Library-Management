@@ -33,6 +33,10 @@ public class Constants {
       public static final String STUDENT_ALREADY_EXISTS = "Student Already Exists";
       public static final String STUDENT_SUCCESSFULLY_CREATED = "Student Successfully Created";
       public static final String CAPTCHA_PATTERN_STRING = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      public static final String DATE_FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
+      public static final String DATE_FORMAT_DD_MMM_YY = "dd.MM.yyyy hh:mm:ss";
+      public static final String DATE_FORMAT_DD_MMM_YY_ANNIVERSARY = "yyyy-MM-dd hh:mm:ss";
+      public static final String DATE_FORMAT_DD_MMM_YY_ANNIVERSARY_DATE = "yyyy-MM-dd hh:mm:ss";
 
 
 
