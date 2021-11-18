@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(date1);
         user.setRegistrationDate(new Date());
         user.setIsActive(1);
+        user.setRole("ROLE_"+user.getRole());
         //Make User username password in the encrypted form
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User user_1 = this.userRepository.save(user);

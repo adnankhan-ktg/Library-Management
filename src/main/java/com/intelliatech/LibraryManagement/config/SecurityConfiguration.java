@@ -71,9 +71,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 		.authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().
-		antMatchers("/captcha/get","/login/generate/token")
-				.permitAll().antMatchers("/basic/**").hasRole("NORMAL")
-				.antMatchers("/user/create").hasRole("ADMIN").anyRequest().authenticated();
+		antMatchers("/captcha/get","/login/generate/token","/user/create")
+				.permitAll()
+				.antMatchers("/basic/**").hasRole("NORMAL")
+				.antMatchers("/user/**","/student/**","/subject/**").hasRole("ADMIN")
+				.anyRequest().authenticated();
 		
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
