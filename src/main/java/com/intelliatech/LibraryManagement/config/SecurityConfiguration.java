@@ -74,7 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 		antMatchers("/captcha/get","/login/user/generate/token","/user/create")
 				.permitAll()
 				.antMatchers("/basic/**").hasRole("NORMAL")
-				.antMatchers("/user/**","/student/**","/subject/**").hasRole("ADMIN")
+				.antMatchers("/user/**","/student/**","/subject/**","/book/**").hasRole("ADMIN")
 				.anyRequest().authenticated();
 		
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

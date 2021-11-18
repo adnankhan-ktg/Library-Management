@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @NoArgsConstructor
 public class ResponseMessage {
 
-    private String Message;
+    private String message;
     private int responseCode;
 
 

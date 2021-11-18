@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
         {
             log.info("Sent registration mail to the user");
             //Send account signup notification to the user
-            mailService.sendMail(new MailRequestDto(user_1.getEmail(),user_1.getFirstName()+" "+user_1.getLastName()+" Your library User account successfully created","Account Registration"));
+//            mailService.sendMail(new MailRequestDto(user_1.getEmail(),user_1.getFirstName()+" "+user_1.getLastName()+" Your library User account successfully created","Account Registration"));
             log.info("leaving createUser() in UserServiceImpl");
            return new ResponseMessage(Constants.USER_SUCCESSFULLY_CREATED,200);
         }else{
@@ -155,8 +155,8 @@ public class UserServiceImpl implements UserService {
             {
                 UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(loginDto.getUsername());
                 String token = this.jwtTokenUtil.generateToken(userDetails);
-                log.info(" Login notification sent to the user");
-                mailService.sendMail(new MailRequestDto(user.getEmail(),user.getFirstName()+" "+user.getLastName()+" You had login the account just","Login Account"));
+//                log.info(" Login notification sent to the user");
+//                mailService.sendMail(new MailRequestDto(user.getEmail(),user.getFirstName()+" "+user.getLastName()+" You had login the account just","Login Account"));
 
                 log.info("Generate token ");
                 log.info("Leaving UserServiceImpl in generateToken()");
