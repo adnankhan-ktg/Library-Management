@@ -37,6 +37,7 @@ public class Constants {
       public static final String DATE_FORMAT_DD_MMM_YY = "dd.MM.yyyy hh:mm:ss";
       public static final String DATE_FORMAT_DD_MMM_YY_ANNIVERSARY = "yyyy-MM-dd hh:mm:ss";
       public static final String DATE_FORMAT_DD_MMM_YY_ANNIVERSARY_DATE = "yyyy-MM-dd hh:mm:ss";
+      public static final String USER_ALREADY_EXISTS = "User Already Exists";
 
 
 

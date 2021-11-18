@@ -1,7 +1,7 @@
 package com.intelliatech.LibraryManagement.serviceimpl;
 
-import com.intelliatech.LibraryManagement.config.JwtTokenUtil;
 import com.intelliatech.LibraryManagement.config.JwtUserDetailsService;
+import com.intelliatech.LibraryManagement.config.JwtUtil;
 import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.dto.*;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-       private JwtTokenUtil jwtTokenUtil;
+       private JwtUtil jwtTokenUtil;
     @Autowired
        private JwtUserDetailsService jwtUserDetailsService;
     @Autowired
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
           User user_2 = this.userRepository.findByUsernameOrEmailOrMobileNumber(userDto.getUsername(),userDto.getEmail(),userDto.getMobileNumber());
           if(user_2 != null)
           {
-              throw new BusinessException(208, Constants.USER_NOT_FOUND);
+              throw new BusinessException(208, Constants.USER_ALREADY_EXISTS);
           }
           //Compare new password and confirm password
         if((userDto.getNewPassword().equals(userDto.getConfirmPassword())) == false)

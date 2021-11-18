@@ -39,6 +39,8 @@ public class User {
     private Date registrationDate;
     @Column(name = "is_active")
     private int isActive;
+    @Column(name = "role")
+    private String role;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;

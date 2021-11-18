@@ -24,6 +24,7 @@ public class UserDto {
     private String dateOfBirth;
     private String registrationDate;
     private int isActive;
+    private String role;
     private Address address;
 
 
