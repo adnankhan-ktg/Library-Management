@@ -34,36 +34,37 @@ class UserLoginControllerTest {
     public static String token;
 
     //Global CaptchaDto Object
-    CaptchaDto captchaDto = new CaptchaDto();
+   public static CaptchaDto captchaDto = new CaptchaDto();
 
 
     @Test
     @Order(1)
-    public void getCaptchaTest() throws Exception
-    {
+    public void getCaptchaTest() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/captcha/get"))
                 .andExpect(status().isOk()).andReturn();
 
         String response = result.getResponse().getContentAsString();
-        captchaDto = mapper.readValue(response,CaptchaDto.class);
+        captchaDto = mapper.readValue(response, CaptchaDto.class);
 
     }
+
     @Test
     @Order(2)
-   public void loginAndGenerateToken() throws Exception{
-            LoginDto loginDto = new LoginDto
-                    ("8964882358","adnan123",captchaDto.getCaptchaCodeId(),captchaDto.getCaptchaCode());
+    public void loginAndGenerateToken() throws Exception {
+        LoginDto loginDto = new LoginDto
+                ("8964882358", "adnan123",
+                        captchaDto.getCaptchaCodeId(), captchaDto.getCaptchaCode());
 
 
-            MvcResult result =  this.mockMvc.perform(get("/login/user/generate/token")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(loginDto))).andExpect(status().isOk()).andReturn();
+        MvcResult result = this.mockMvc.perform(get("/login/user/generate/token")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(loginDto))).andExpect(status().isOk()).andReturn();
 
-            String response = result.getResponse().getContentAsString();
-            TokenDto tokenDto = mapper.readValue(response,TokenDto.class);
-            token = tokenDto.getToken();
-
-        }
-
+        String response = result.getResponse().getContentAsString();
+        TokenDto tokenDto = mapper.readValue(response, TokenDto.class);
+        token = tokenDto.getToken();
 
     }
+
+
+}
