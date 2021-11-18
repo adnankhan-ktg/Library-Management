@@ -12,9 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/login")
 public class UserLoginController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -24,16 +26,8 @@ public class UserLoginController {
     @Autowired
     private CaptchaService captchaService;
 
-    @GetMapping("/login")
-    public ResponseMessage login(@RequestBody LoginDto loginDto) throws BusinessException
-    {
-        log.info("Inside UserLogin in login()");
-        ResponseMessage responseMessage = this.userService.login(loginDto);
-        log.info("Leaving UserLoginController in login()");
-        return responseMessage;
-    }
 
-    @GetMapping("/login/generate/token")
+    @GetMapping("/user/generate/token")
     public TokenDto loginAndGenerateToken(@RequestBody LoginDto loginDto) throws BusinessException
     {
         log.info("Inside UserLoginController in loginAndGenerateToken()");
