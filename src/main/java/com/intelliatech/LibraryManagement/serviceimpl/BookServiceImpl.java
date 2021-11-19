@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,17 +31,24 @@ import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
+
     private static final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
+
     @Autowired
      private BookRepository bookRepository;
+
     @Autowired
     private StudentRepository studentRepository;
+
     @Autowired
     private StudentBookIssuedRepository studentBookIssuedRepository;
+
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @Autowired
     private MailService mailService;
+
     @Override
     public ResponseMessage createBook(BookDto bookDto) throws Exception {
         log.info("Inside BookServiceImpl in createBook()");
@@ -60,7 +68,7 @@ public class BookServiceImpl implements BookService {
         //Database call
         Book book_2 = this.bookRepository.save(book_1);
 
-        if(book_2 == null)
+        if(ObjectUtils.isEmpty(book_2))
         {
             log.info("throw exception");
             throw new BusinessException(400, Constants.BAD_REQUEST);
@@ -110,12 +118,12 @@ public class BookServiceImpl implements BookService {
         //Get student by studentId
         Student student = this.studentRepository.findByStudentId(studentId);
         //Check student exists or not
-        if(student == null)
+        if(ObjectUtils.isEmpty(student))
         {
             throw new BusinessException(404, Constants.STUDENT_NOT_FOUND);
         }
         //Check book exists or not
-        if(book == null)
+        if(ObjectUtils.isEmpty(book))
         {
             throw new BusinessException(404, Constants.BOOK_NOT_FOUND);
         }
@@ -160,7 +168,7 @@ public class BookServiceImpl implements BookService {
 
             //database call for StudentBookIssued type of table...
             StudentBookIssued studentBookIssued1 = this.studentBookIssuedRepository.save(studentBookIssued);
-            if(studentBookIssued1 == null)
+            if(ObjectUtils.isEmpty(studentBookIssued1))
             {
                 log.info("Throw Exception");
                 throw new BusinessException(400,Constants.BAD_REQUEST);
@@ -181,7 +189,7 @@ public class BookServiceImpl implements BookService {
     public ResponseMessage studentBookReturned(long studentId, long bookId) throws Exception {
         log.info("Inside BooServiceImpl in studentBookReturned()");
         StudentBookIssued studentBookIssued = this.studentBookIssuedRepository.findByStudentIdAndBookIdAndIsIssued(studentId,bookId,1);
-        if(studentBookIssued == null)
+        if(ObjectUtils.isEmpty(studentBookIssued))
         {
             throw new BusinessException(404,Constants.RECORD_NOT_FOUND);
         }
@@ -235,7 +243,7 @@ public class BookServiceImpl implements BookService {
     public BookDto getBook(long id) throws BusinessException {
         log.info("Inside BookServiceImpl in getBook()");
          Book book = this.bookRepository.findByBookId(id);
-        if(book == null)
+        if(ObjectUtils.isEmpty(book))
         {
             log.error("Throw exception book not found");
             throw new BusinessException(404,"Book Not Found");

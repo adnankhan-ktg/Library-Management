@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
@@ -43,14 +44,14 @@ public class StudentServiceImpl implements StudentService {
         log.info("Inside StudentServiceImpl in createStudent()");
         //Check Student already exists or not
         Student student_1 = this.studentRepository.findByEmailOrMobileNumber(studentDto.getEmail(),studentDto.getMobileNumber());
-        if(student_1 != null)
+        if(!ObjectUtils.isEmpty(student_1))
         {
             throw new BusinessException(208, Constants.STUDENT_ALREADY_EXISTS);
         }
         //Student Entity Object
          Student student_2 = new Student();
 
-        Date date1=new SimpleDateFormat(Constants.DATE_FORMAT_DD_MM_YYYY).parse(studentDto.getDateOfBirth());
+        Date date1 = new SimpleDateFormat(Constants.DATE_FORMAT_DD_MM_YYYY).parse(studentDto.getDateOfBirth());
         student_2.setDateOfBirth(date1);
 
         //StudentDto to Student Entity
@@ -64,7 +65,8 @@ public class StudentServiceImpl implements StudentService {
 
         //Save Student Object
         Student student_3 = this.studentRepository.save(student_2);
-        if(student_3 != null)
+
+          if(!ObjectUtils.isEmpty(student_3))
         {
             log.info("Sent student registration notification to the student");
             //Sent notification to the student for registration
@@ -110,7 +112,7 @@ public class StudentServiceImpl implements StudentService {
           //Database code
           Student student_1 = this.studentRepository.findByStudentId(studentId);
 
-          if(student_1 == null)
+          if(ObjectUtils.isEmpty(student_1))
           {
               throw new BusinessException(404,"Desired Student is not found");
           }else{
@@ -129,7 +131,7 @@ public class StudentServiceImpl implements StudentService {
         log.info("Inside StudentServiceImpl in createStudent()");
         //Check Student already exists or not
         Student student_1 = this.studentRepository.findByEmailOrMobileNumber(studentDto.getEmail(),studentDto.getMobileNumber());
-        if(student_1 != null)
+        if(!ObjectUtils.isEmpty(student_1))
         {
             throw new BusinessException(208,Constants.STUDENT_ALREADY_EXISTS);
         }
@@ -151,7 +153,7 @@ public class StudentServiceImpl implements StudentService {
            }
         //Save Student Object
         Student student_3 = this.studentRepository.save(student_2);
-        if(student_3 != null)
+        if(!ObjectUtils.isEmpty(student_3))
         {
             log.info("Sent student registration notification to the student");
 //            Sent notification to the student for registration
