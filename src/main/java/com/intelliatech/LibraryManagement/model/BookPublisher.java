@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class BookPublisher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "publisher_id")
     private long PublisherId;
     @Column(name = "publisher_name")

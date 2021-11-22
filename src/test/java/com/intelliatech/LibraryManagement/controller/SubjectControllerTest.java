@@ -148,7 +148,7 @@ class SubjectControllerTest {
         listOfSubjectDto.put(3,new SubjectDto(3,"chemistry",102));
 
 
-        //For Dynamic value of subject Id
+        //For Dynamic value of subject id
         int subjectId = 1;
 
 

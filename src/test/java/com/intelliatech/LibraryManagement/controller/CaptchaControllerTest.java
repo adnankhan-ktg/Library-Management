@@ -30,6 +30,7 @@ class CaptchaControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper mapper;
 

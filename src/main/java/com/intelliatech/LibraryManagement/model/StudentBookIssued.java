@@ -17,7 +17,7 @@ public class StudentBookIssued {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "student_id")
     private long studentId;

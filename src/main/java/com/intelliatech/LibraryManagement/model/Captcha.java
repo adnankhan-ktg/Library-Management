@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Captcha {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "captcha_code_id")
     private long captchaCodeId;
     @Column(name = "captcha_code")
