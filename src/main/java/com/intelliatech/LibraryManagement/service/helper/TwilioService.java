@@ -1,8 +1,12 @@
 package com.intelliatech.LibraryManagement.service.helper;
 
+import com.intelliatech.LibraryManagement.dto.SendOtpMobileDto;
 import com.twilio.Twilio;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 public class TwilioService {
 
 
@@ -14,23 +18,21 @@ public class TwilioService {
         Twilio.init(account_sid, auth_token);
     }
 
-    public String otpSendToMobile(String mobileNumber, Integer otp) {
+    public String otpSendToMobile(SendOtpMobileDto otpDto) {
 
         RestTemplate restTemplate = new RestTemplate();
         String countryCode = "91";
         try {
-            restTemplate.getForEntity("http://2factor.in/API/V1/9e879a29-2417-11eb-83d4-0200cd936042/SMS/" + countryCode
-                    + mobileNumber + "/ " + otp + "/PlayStoreMaikhaneUser", Object.class);
 
             restTemplate.getForEntity("http://2factor.in/API/V1/9e879a29-2417-11eb-83d4-0200cd936042/SMS/" + countryCode
-                    + mobileNumber + "/ " + otp + "/MaikhaneServiceProviderLoginOTP", Object.class);
+                    + otpDto.getMobileNumber() + "/ " + otpDto.getOtp() + "/MaikhaneServiceProviderLoginOTP", Object.class);
 
 
             System.out.println("success");
         } catch (Exception e) {
             return "UnSuccess";
         }
-        System.out.println(otp);
+        System.out.println(otpDto.getOtp());
         return "Success";
     }
 

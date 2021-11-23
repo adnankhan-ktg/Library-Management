@@ -2,6 +2,7 @@ package com.intelliatech.LibraryManagement.serviceimpl;
 import com.intelliatech.LibraryManagement.constants.Constants;
 import com.intelliatech.LibraryManagement.controller.UserIdPasswordForgetController;
 import com.intelliatech.LibraryManagement.dto.MailRequestDto;
+import com.intelliatech.LibraryManagement.dto.SendOtpMobileDto;
 import com.intelliatech.LibraryManagement.dto.UserIdPasswordForgetDto;
 import com.intelliatech.LibraryManagement.exception.BusinessException;
 import com.intelliatech.LibraryManagement.exception.ResponseMessage;
@@ -9,7 +10,7 @@ import com.intelliatech.LibraryManagement.model.User;
 import com.intelliatech.LibraryManagement.repository.UserRepository;
 import com.intelliatech.LibraryManagement.service.UserIdPasswordForgetService;
 import com.intelliatech.LibraryManagement.service.helper.MailService;
-import com.intelliatech.LibraryManagement.service.helper.OtpService;
+import com.intelliatech.LibraryManagement.service.helper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class UserIdPasswordForgetServiceImpl implements UserIdPasswordForgetServ
     private MailService mailService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TwilioService twilioService;
 
 
     @Override
@@ -51,8 +54,11 @@ public class UserIdPasswordForgetServiceImpl implements UserIdPasswordForgetServ
             MailRequestDto mailRequestDto = new MailRequestDto(user.getEmail(),"Your Library Management UserId Password Forget OTP is : "+GeneratedOtpString,"OTP for UserId Password Forget");
             //Send the mail
             mailService.sendMail(mailRequestDto);
+            //Send otp to the user mobile number
+            twilioService.otpSendToMobile(new SendOtpMobileDto(user.getMobileNumber(),GeneratedOtp));
+
             log.info("Leaving UserIdPasswordForgetServiceImpl in getPasswordForgetOtp()");
-            return new ResponseMessage("Otp sent on the your Email",200);
+            return new ResponseMessage("OTP has been sent to your mobile number and email",200);
 
 
         }else{
